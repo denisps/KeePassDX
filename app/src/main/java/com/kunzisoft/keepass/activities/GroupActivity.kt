@@ -380,6 +380,11 @@ class GroupActivity : DatabaseLockActivity(),
                             mExternalFileHelper?.openDocument()
                         }
                     }
+                    R.id.menu_import_csv -> {
+                        mCurrentGroup?.let {
+                            CsvImportActivity.launch(this@GroupActivity, it.nodeId)
+                        }
+                    }
                     R.id.menu_save_copy_to -> {
                         if (mDatabaseAllowUserVerification) {
                             checkUserVerification(
@@ -1441,6 +1446,12 @@ class GroupActivity : DatabaseLockActivity(),
             }
             R.id.menu_merge_database -> {
                 mergeDatabase()
+                return true
+            }
+            R.id.menu_import_csv -> {
+                mCurrentGroup?.let {
+                    CsvImportActivity.launch(this, it.nodeId)
+                }
                 return true
             }
             R.id.menu_reload_database -> {

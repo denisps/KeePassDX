@@ -55,6 +55,7 @@ import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_CREATE_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_DELETE_ENTRY_HISTORY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_DELETE_NODES_TASK
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_IMPORT_CSV_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_LOAD_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_MERGE_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_MOVE_NODES_TASK
@@ -450,6 +451,14 @@ class DatabaseTaskProvider(
             putInt(DatabaseTaskNotificationService.ENTRY_HISTORY_POSITION_KEY, entryHistoryPosition)
             putBoolean(DatabaseTaskNotificationService.SAVE_DATABASE_KEY, save)
         }, ACTION_DATABASE_DELETE_ENTRY_HISTORY)
+    }
+
+    fun startDatabaseImportCsv(entries: List<Entry>, parentId: NodeId<*>, save: Boolean) {
+        start(Bundle().apply {
+            putParcelableList(DatabaseTaskNotificationService.ENTRY_KEY, entries)
+            putParcelable(DatabaseTaskNotificationService.PARENT_ID_KEY, parentId)
+            putBoolean(DatabaseTaskNotificationService.SAVE_DATABASE_KEY, save)
+        }, ACTION_DATABASE_IMPORT_CSV_TASK)
     }
 
     /*

@@ -531,7 +531,7 @@
     <string name="csv_import_map_fields">Mapper les champs</string>
     <string name="csv_import_confirm">Importer</string>
     <string name="csv_field_title">Titre</string>
-    <string name="csv_field_username">Nom d\\'utilisateur</string>
+    <string name="csv_field_username">Nom d\'utilisateur</string>
     <string name="csv_field_password">Mot de passe</string>
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notes</string>

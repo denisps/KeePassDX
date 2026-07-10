@@ -106,12 +106,14 @@ class ExternalFileHelper {
     }
 
     fun openDocument(getContent: Boolean = false,
-                     typeString: String = "*/*") {
+                     typeString: String = "*/*",
+                     extraMimeTypes: Array<String>? = null) {
         try {
             if (getContent) {
                 getContentResultLauncher?.launch(typeString)
             } else {
-                openDocumentResultLauncher?.launch(arrayOf(typeString))
+                val mimeTypes = extraMimeTypes ?: arrayOf(typeString)
+                openDocumentResultLauncher?.launch(mimeTypes)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Unable to open document", e)

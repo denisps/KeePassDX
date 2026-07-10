@@ -86,6 +86,9 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
                     FieldType.IGNORE -> {}
                 }
             }
+            if (entry.title.isEmpty() && entry.url.isNotEmpty()) {
+                entry.title = entry.url
+            }
             if (entry.title.isNotEmpty() || entry.username.isNotEmpty()) {
                 entries.add(entry)
             }

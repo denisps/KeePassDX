@@ -20,11 +20,11 @@
 package com.kunzisoft.keepass.activities
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -32,7 +32,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,31 +41,20 @@ import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.node.NodeId
-import com.kunzisoft.keepass.viewmodels.CsvImportViewModel
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
-import java.util.UUID
+import com.kunzisoft.keepass.viewmodels.CsvImportViewModel
 
 class CsvImportActivity : DatabaseLockActivity() {
 
     private val viewModel: CsvImportViewModel by viewModels()
 
-    private lateinit var coordinatorLayout: androidx.coordinatorlayout.widget.CoordinatorLayout
-    private lateinit var buttonPickFile: Button
-    private lateinit var textFilePath: TextView
+    private lateinit var coordinatorLayout: View
     private lateinit var recyclerFieldMapping: RecyclerView
     private lateinit var buttonConfirmImport: Button
 
     private var parentGroup: Group? = null
 
-    override fun viewToInvalidateTimeout(): View? = coordinatorLayout
-
-    private val pickFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            contentResolver.openInputStream(it)?.use { inputStream ->
-                viewModel.setFile(it, inputStream)
-            }
-        }
-    }
+    override fun viewToInvalidateTimeout(): View = coordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,21 +62,22 @@ class CsvImportActivity : DatabaseLockActivity() {
 
         coordinatorLayout = findViewById(R.id.coordinator_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        toolbar.title = getString(R.string.csv_import_title)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        buttonPickFile = findViewById(R.id.button_pick_file)
-        textFilePath = findViewById(R.id.text_file_path)
         recyclerFieldMapping = findViewById(R.id.recycler_field_mapping)
         buttonConfirmImport = findViewById(R.id.button_confirm_import)
 
-        buttonPickFile.setOnClickListener {
-            pickFileLauncher.launch("text/*")
+        val csvUri: Uri? = intent.getParcelableExtraCompat(EXTRA_CSV_URI)
+        if (csvUri == null) {
+            finish()
+            return
         }
 
-        viewModel.fileUri.observe(this) {
-            textFilePath.text = it.toString()
-            buttonConfirmImport.isEnabled = true
+        viewModel.fileUri.value = csvUri
+        contentResolver.openInputStream(csvUri)?.use { inputStream ->
+            viewModel.setFile(csvUri, inputStream)
         }
 
         recyclerFieldMapping.layoutManager = LinearLayoutManager(this)
@@ -105,6 +94,16 @@ class CsvImportActivity : DatabaseLockActivity() {
             }
             finish()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDatabaseRetrieved(database: ContextualDatabase) {
@@ -136,10 +135,20 @@ class CsvImportActivity : DatabaseLockActivity() {
 
             fun bind(header: String, position: Int) {
                 textHeader.text = header
+                val fieldTypes = CsvImportViewModel.FieldType.values()
                 val adapter = ArrayAdapter(
                     itemView.context,
                     android.R.layout.simple_spinner_item,
-                    CsvImportViewModel.FieldType.values().map { it.name }
+                    fieldTypes.map { type ->
+                        when (type) {
+                            CsvImportViewModel.FieldType.IGNORE -> getString(R.string.csv_field_ignore)
+                            CsvImportViewModel.FieldType.TITLE -> getString(R.string.csv_field_title)
+                            CsvImportViewModel.FieldType.USERNAME -> getString(R.string.csv_field_username)
+                            CsvImportViewModel.FieldType.PASSWORD -> getString(R.string.csv_field_password)
+                            CsvImportViewModel.FieldType.URL -> getString(R.string.csv_field_url)
+                            CsvImportViewModel.FieldType.NOTES -> getString(R.string.csv_field_notes)
+                        }
+                    }
                 )
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerFieldType.adapter = adapter
@@ -150,7 +159,7 @@ class CsvImportActivity : DatabaseLockActivity() {
                 spinnerFieldType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                         val newMapping = viewModel.mapping.value ?: mutableMapOf()
-                        newMapping[position] = CsvImportViewModel.FieldType.values()[pos]
+                        newMapping[position] = fieldTypes[pos]
                         viewModel.mapping.value = newMapping
                     }
 
@@ -162,10 +171,12 @@ class CsvImportActivity : DatabaseLockActivity() {
 
     companion object {
         private const val EXTRA_PARENT_ID = "EXTRA_PARENT_ID"
+        private const val EXTRA_CSV_URI = "EXTRA_CSV_URI"
 
-        fun launch(activity: Activity, parentId: NodeId<*>) {
+        fun launch(activity: Activity, parentId: NodeId<*>, csvUri: Uri) {
             val intent = Intent(activity, CsvImportActivity::class.java)
             intent.putExtra(EXTRA_PARENT_ID, parentId)
+            intent.putExtra(EXTRA_CSV_URI, csvUri)
             activity.startActivity(intent)
         }
     }

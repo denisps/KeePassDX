@@ -56,6 +56,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
+import java.util.UUID
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.kunzisoft.keepass.R
@@ -100,6 +102,9 @@ import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_ENTRY_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_GROUP_TASK
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_IMPORT_CSV_TASK
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.NEW_NODES_KEY
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ENTRIES_ID_KEY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.getNewEntry
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.settings.SettingsActivity
@@ -176,6 +181,8 @@ class GroupActivity : DatabaseLockActivity(),
     private var mRecyclingBinEnabled = false
     private var mRecyclingBinIsCurrentGroup = false
     private var mRequestStartupSearch = true
+
+    private var mPendingActionType: UserVerificationActionType? = null
 
     private var actionNodeMode: ActionMode? = null
 
@@ -347,7 +354,20 @@ class GroupActivity : DatabaseLockActivity(),
         // Manage 'merge from" and "save to"
         mExternalFileHelper = ExternalFileHelper(this)
         mExternalFileHelper?.buildOpenDocument { uri ->
-            launchDialogToAskMainCredential(uri)
+            uri?.let {
+                when (mPendingActionType) {
+                    UserVerificationActionType.MERGE_FROM_DATABASE -> {
+                        launchDialogToAskMainCredential(it)
+                    }
+                    UserVerificationActionType.IMPORT_CSV -> {
+                        mCurrentGroup?.let { group ->
+                            CsvImportActivity.launch(this, group.nodeId, it)
+                        }
+                    }
+                    else -> {}
+                }
+            }
+            mPendingActionType = null
         }
         mExternalFileHelper?.buildCreateDocument("application/x-keepass") { uri ->
             uri?.let {
@@ -367,6 +387,7 @@ class GroupActivity : DatabaseLockActivity(),
                         SettingsActivity.launch(this@GroupActivity, true)
                     }
                     R.id.menu_merge_from -> {
+                        mPendingActionType = UserVerificationActionType.MERGE_FROM_DATABASE
                         if (mDatabaseAllowUserVerification) {
                             checkUserVerification(
                                 userVerificationViewModel = mUserVerificationViewModel,
@@ -381,8 +402,18 @@ class GroupActivity : DatabaseLockActivity(),
                         }
                     }
                     R.id.menu_import_csv -> {
-                        mCurrentGroup?.let {
-                            CsvImportActivity.launch(this@GroupActivity, it.nodeId)
+                        mPendingActionType = UserVerificationActionType.IMPORT_CSV
+                        if (mDatabaseAllowUserVerification) {
+                            checkUserVerification(
+                                userVerificationViewModel = mUserVerificationViewModel,
+                                dataToVerify = UserVerificationData(
+                                    actionType = UserVerificationActionType.IMPORT_CSV,
+                                    database = mDatabase
+                                )
+                            )
+                        } else {
+                            // Open document picker directly without verification
+                            mExternalFileHelper?.openDocument(extraMimeTypes = arrayOf("text/csv", "text/comma-separated-values", "application/csv"))
                         }
                     }
                     R.id.menu_save_copy_to -> {
@@ -623,6 +654,9 @@ class GroupActivity : DatabaseLockActivity(),
                                 UserVerificationActionType.MERGE_FROM_DATABASE -> {
                                     mExternalFileHelper?.openDocument()
                                 }
+                                UserVerificationActionType.IMPORT_CSV -> {
+                                    mExternalFileHelper?.openDocument(extraMimeTypes = arrayOf("text/csv", "text/comma-separated-values", "application/csv"))
+                                }
                                 UserVerificationActionType.SAVE_DATABASE_COPY_TO -> {
                                     mExternalFileHelper?.createDocument(
                                         getString(R.string.database_file_name_default) +
@@ -797,6 +831,18 @@ class GroupActivity : DatabaseLockActivity(),
                             // Save not used
                         }
                     )
+                }
+            }
+            ACTION_DATABASE_IMPORT_CSV_TASK -> {
+                if (result.isSuccess) {
+                    val entriesCount = result.data?.getBundle(NEW_NODES_KEY)
+                        ?.getParcelableList<NodeId<UUID>>(ENTRIES_ID_KEY)?.size ?: 0
+                    coordinatorLayout?.let {
+                        Snackbar.make(it, getString(R.string.csv_import_success, entriesCount), Snackbar.LENGTH_LONG).show()
+                    }
+                    loadGroup()
+                } else {
+                    coordinatorError?.showActionErrorIfNeeded(result)
                 }
             }
         }
@@ -1296,6 +1342,7 @@ class GroupActivity : DatabaseLockActivity(),
             val modeCondition = mSpecialMode == SpecialMode.DEFAULT
             menu.findItem(R.id.menu_app_settings)?.isVisible = modeCondition
             menu.findItem(R.id.menu_merge_from)?.isVisible = mMergeDataAllowed && modeCondition
+            menu.findItem(R.id.menu_import_csv)?.isVisible = !mDatabaseReadOnly && modeCondition
             menu.findItem(R.id.menu_save_copy_to)?.isVisible = modeCondition
             menu.findItem(R.id.menu_about)?.isVisible = modeCondition
             menu.findItem(R.id.menu_contribute)?.isVisible = modeCondition
@@ -1446,12 +1493,6 @@ class GroupActivity : DatabaseLockActivity(),
             }
             R.id.menu_merge_database -> {
                 mergeDatabase()
-                return true
-            }
-            R.id.menu_import_csv -> {
-                mCurrentGroup?.let {
-                    CsvImportActivity.launch(this, it.nodeId)
-                }
                 return true
             }
             R.id.menu_reload_database -> {

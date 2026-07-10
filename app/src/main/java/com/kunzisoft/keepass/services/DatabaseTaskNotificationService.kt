@@ -1212,6 +1212,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             && intent.hasExtra(PARENT_ID_KEY)
             && intent.hasExtra(SAVE_DATABASE_KEY)
         ) {
+            updateMessage(R.string.csv_import_title)
             val parentId: NodeId<*>? = intent.getParcelableExtraCompat(PARENT_ID_KEY)
             val entries: List<Entry>? = intent.getParcelableList(ENTRY_KEY)
             if (parentId == null || entries == null) return null

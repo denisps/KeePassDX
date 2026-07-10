@@ -85,6 +85,27 @@ class ExternalFileHelper {
         }
     }
 
+    fun registerOpenDocument(onFileSelected: (Uri?) -> Unit): OpenDocumentLauncher {
+        val resultCallback = ActivityResultCallback<Uri?> { result ->
+            activity?.contentResolver?.takeUriPermission(result)
+            onFileSelected(result)
+        }
+        val launcher = (fragment ?: activity)!!.registerForActivityResult(OpenDocument(), resultCallback)
+        return OpenDocumentLauncher(launcher)
+    }
+
+    inner class OpenDocumentLauncher(private val launcher: ActivityResultLauncher<Array<String>>) {
+        fun launch(typeString: String = "*/*", extraMimeTypes: Array<String>? = null) {
+            try {
+                val mimeTypes = extraMimeTypes ?: arrayOf(typeString)
+                launcher.launch(mimeTypes)
+            } catch (e: Exception) {
+                Log.e(TAG, "Unable to open document", e)
+                showFileManagerDialogFragment()
+            }
+        }
+    }
+
     fun buildCreateDocument(typeString: String = "application/octet-stream",
                             onFileCreated: (fileCreated: Uri?)->Unit) {
 
@@ -102,6 +123,25 @@ class ExternalFileHelper {
                 CreateDocument(typeString),
                 resultCallback
             )
+        }
+    }
+
+    fun registerCreateDocument(mimeType: String, onFileCreated: (Uri?) -> Unit): CreateDocumentLauncher {
+        val resultCallback = ActivityResultCallback<Uri?> { result ->
+            onFileCreated(result)
+        }
+        val launcher = (fragment ?: activity)!!.registerForActivityResult(CreateDocument(mimeType), resultCallback)
+        return CreateDocumentLauncher(launcher)
+    }
+
+    inner class CreateDocumentLauncher(private val launcher: ActivityResultLauncher<String>) {
+        fun launch(titleString: String) {
+            try {
+                launcher.launch(titleString)
+            } catch (e: Exception) {
+                Log.e(TAG, "Unable to create document", e)
+                showFileManagerDialogFragment()
+            }
         }
     }
 

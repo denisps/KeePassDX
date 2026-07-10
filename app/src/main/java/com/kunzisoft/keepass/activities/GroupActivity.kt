@@ -39,6 +39,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -182,7 +183,9 @@ class GroupActivity : DatabaseLockActivity(),
     private var mRecyclingBinIsCurrentGroup = false
     private var mRequestStartupSearch = true
 
-    private var mPendingActionType: UserVerificationActionType? = null
+    private var mMergeLauncher: ExternalFileHelper.OpenDocumentLauncher? = null
+    private var mImportCsvLauncher: ExternalFileHelper.OpenDocumentLauncher? = null
+    private var mSaveCopyLauncher: ExternalFileHelper.CreateDocumentLauncher? = null
 
     private var actionNodeMode: ActionMode? = null
 
@@ -353,26 +356,26 @@ class GroupActivity : DatabaseLockActivity(),
 
         // Manage 'merge from" and "save to"
         mExternalFileHelper = ExternalFileHelper(this)
-        mExternalFileHelper?.buildOpenDocument { uri ->
-            uri?.let {
-                when (mPendingActionType) {
-                    UserVerificationActionType.MERGE_FROM_DATABASE -> {
-                        launchDialogToAskMainCredential(it)
-                    }
-                    UserVerificationActionType.IMPORT_CSV -> {
-                        mCurrentGroup?.let { group ->
-                            CsvImportActivity.launch(this, group.nodeId, it)
-                        }
-                    }
-                    else -> {}
-                }
-            }
-            mPendingActionType = null
+        mMergeLauncher = mExternalFileHelper?.registerOpenDocument { uri ->
+            val selectedUri = uri ?: return@registerOpenDocument
+            launchDialogToAskMainCredential(selectedUri)
         }
-        mExternalFileHelper?.buildCreateDocument("application/x-keepass") { uri ->
-            uri?.let {
-                saveDatabaseTo(it)
+        mImportCsvLauncher = mExternalFileHelper?.registerOpenDocument { uri ->
+            val selectedUri = uri ?: return@registerOpenDocument
+            // Use current group, or main group, or fallback to root group
+            val groupId = mCurrentGroup?.nodeId
+                ?: mMainGroup?.nodeId
+                ?: mDatabase?.rootGroup?.nodeId
+            if (groupId == null) {
+                Log.e(TAG, "No group found for CSV import")
+                Toast.makeText(this, R.string.error_load_database, Toast.LENGTH_LONG).show()
+                return@registerOpenDocument
             }
+            CsvImportActivity.launch(this, groupId, selectedUri)
+        }
+        mSaveCopyLauncher = mExternalFileHelper?.registerCreateDocument("application/x-keepass") { uri ->
+            val createdUri = uri ?: return@registerCreateDocument
+            saveDatabaseTo(createdUri)
         }
 
         // Menu in drawer
@@ -387,7 +390,6 @@ class GroupActivity : DatabaseLockActivity(),
                         SettingsActivity.launch(this@GroupActivity, true)
                     }
                     R.id.menu_merge_from -> {
-                        mPendingActionType = UserVerificationActionType.MERGE_FROM_DATABASE
                         if (mDatabaseAllowUserVerification) {
                             checkUserVerification(
                                 userVerificationViewModel = mUserVerificationViewModel,
@@ -398,11 +400,10 @@ class GroupActivity : DatabaseLockActivity(),
                             )
                         } else {
                             // Open document picker directly without verification
-                            mExternalFileHelper?.openDocument()
+                            mMergeLauncher?.launch()
                         }
                     }
                     R.id.menu_import_csv -> {
-                        mPendingActionType = UserVerificationActionType.IMPORT_CSV
                         if (mDatabaseAllowUserVerification) {
                             checkUserVerification(
                                 userVerificationViewModel = mUserVerificationViewModel,
@@ -413,7 +414,7 @@ class GroupActivity : DatabaseLockActivity(),
                             )
                         } else {
                             // Open document picker directly without verification
-                            mExternalFileHelper?.openDocument(extraMimeTypes = arrayOf("text/csv", "text/comma-separated-values", "application/csv"))
+                            mImportCsvLauncher?.launch(extraMimeTypes = arrayOf("text/csv", "text/comma-separated-values", "application/csv"))
                         }
                     }
                     R.id.menu_save_copy_to -> {
@@ -427,7 +428,7 @@ class GroupActivity : DatabaseLockActivity(),
                             )
                         } else {
                             // Create document directly without verification
-                            mExternalFileHelper?.createDocument(
+                            mSaveCopyLauncher?.launch(
                                 getString(R.string.database_file_name_default) +
                                         "_" +
                                         LocalDateTime.now().toString() +
@@ -652,13 +653,13 @@ class GroupActivity : DatabaseLockActivity(),
                                     editEntry(uVState.dataToVerify.database,  uVState.dataToVerify.entryId)
                                 }
                                 UserVerificationActionType.MERGE_FROM_DATABASE -> {
-                                    mExternalFileHelper?.openDocument()
+                                    mMergeLauncher?.launch()
                                 }
                                 UserVerificationActionType.IMPORT_CSV -> {
-                                    mExternalFileHelper?.openDocument(extraMimeTypes = arrayOf("text/csv", "text/comma-separated-values", "application/csv"))
+                                    mImportCsvLauncher?.launch(extraMimeTypes = arrayOf("text/csv", "text/comma-separated-values", "application/csv"))
                                 }
                                 UserVerificationActionType.SAVE_DATABASE_COPY_TO -> {
-                                    mExternalFileHelper?.createDocument(
+                                    mSaveCopyLauncher?.launch(
                                         getString(R.string.database_file_name_default) +
                                                 "_" +
                                                 LocalDateTime.now().toString() +

@@ -1208,13 +1208,12 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         intent: Intent,
         database: ContextualDatabase,
     ): ActionRunnable? {
-        return if (intent.hasExtra(ENTRY_KEY)
-            && intent.hasExtra(PARENT_ID_KEY)
+        return if (intent.hasExtra(PARENT_ID_KEY)
             && intent.hasExtra(SAVE_DATABASE_KEY)
         ) {
             updateMessage(R.string.csv_import_title)
             val parentId: NodeId<*>? = intent.getParcelableExtraCompat(PARENT_ID_KEY)
-            val entries: List<Entry>? = intent.getParcelableList(ENTRY_KEY)
+            val entries: List<Entry>? = retrievePendingCsvEntries()
             if (parentId == null || entries == null) return null
             val saveDatabase = intent.getBooleanExtra(SAVE_DATABASE_KEY, false)
             database.getGroupById(parentId)?.let { parent ->
@@ -1363,6 +1362,18 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         private val TAG = DatabaseTaskNotificationService::class.java.name
 
         private const val CHANNEL_DATABASE_ID = "com.kunzisoft.keepass.notification.channel.database"
+
+        // Large entry lists cannot be passed through Binder IPC (1 MB limit), so we
+        // use this in-process store instead of putting them in the Intent bundle.
+        private val pendingCsvEntries = java.util.concurrent.atomic.AtomicReference<List<Entry>?>(null)
+
+        fun storePendingCsvEntries(entries: List<Entry>) {
+            pendingCsvEntries.set(entries)
+        }
+
+        private fun retrievePendingCsvEntries(): List<Entry>? {
+            return pendingCsvEntries.getAndSet(null)
+        }
 
         const val ACTION_DATABASE_CREATE_TASK = "ACTION_DATABASE_CREATE_TASK"
         const val ACTION_DATABASE_LOAD_TASK = "ACTION_DATABASE_LOAD_TASK"

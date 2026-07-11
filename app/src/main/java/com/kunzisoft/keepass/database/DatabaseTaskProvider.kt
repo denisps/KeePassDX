@@ -454,8 +454,10 @@ class DatabaseTaskProvider(
     }
 
     fun startDatabaseImportCsv(entries: List<Entry>, parentId: NodeId<*>, save: Boolean) {
+        // Store entries in-process to avoid TransactionTooLargeException when passing
+        // large Parcelable lists through Binder IPC via the Intent bundle.
+        DatabaseTaskNotificationService.storePendingCsvEntries(entries)
         start(Bundle().apply {
-            putParcelableList(DatabaseTaskNotificationService.ENTRY_KEY, entries)
             putParcelable(DatabaseTaskNotificationService.PARENT_ID_KEY, parentId)
             putBoolean(DatabaseTaskNotificationService.SAVE_DATABASE_KEY, save)
         }, ACTION_DATABASE_IMPORT_CSV_TASK)

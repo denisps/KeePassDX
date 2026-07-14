@@ -103,7 +103,7 @@ import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_ENTRY_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_GROUP_TASK
-import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_IMPORT_CSV_TASK
+import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_IMPORT_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.NEW_NODES_KEY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ENTRIES_ID_KEY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.getNewEntry
@@ -834,7 +834,7 @@ class GroupActivity : DatabaseLockActivity(),
                     )
                 }
             }
-            ACTION_DATABASE_IMPORT_CSV_TASK -> {
+            ACTION_DATABASE_IMPORT_TASK -> {
                 if (result.isSuccess) {
                     val entriesCount = result.data?.getBundle(NEW_NODES_KEY)
                         ?.getParcelableList<NodeId<UUID>>(ENTRIES_ID_KEY)?.size ?: 0

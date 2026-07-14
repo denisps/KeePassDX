@@ -49,7 +49,7 @@ import com.kunzisoft.keepass.database.action.history.RestoreEntryHistoryDatabase
 import com.kunzisoft.keepass.database.action.node.ActionNodesValues
 import com.kunzisoft.keepass.database.action.node.AddEntryRunnable
 import com.kunzisoft.keepass.database.action.node.AddGroupRunnable
-import com.kunzisoft.keepass.database.action.node.ImportCsvRunnable
+import com.kunzisoft.keepass.database.action.node.ImportRunnable
 import com.kunzisoft.keepass.database.action.node.AfterActionNodesFinish
 import com.kunzisoft.keepass.database.action.node.CopyNodesRunnable
 import com.kunzisoft.keepass.database.action.node.DeleteNodesRunnable
@@ -358,7 +358,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             ACTION_DATABASE_DELETE_NODES_TASK -> buildDatabaseDeleteNodesActionTask(intent, database)
             ACTION_DATABASE_RESTORE_ENTRY_HISTORY -> buildDatabaseRestoreEntryHistoryActionTask(intent, database)
             ACTION_DATABASE_DELETE_ENTRY_HISTORY -> buildDatabaseDeleteEntryHistoryActionTask(intent, database)
-            ACTION_DATABASE_IMPORT_CSV_TASK -> buildDatabaseImportCsvActionTask(intent, database)
+            ACTION_DATABASE_IMPORT_TASK -> buildDatabaseImportActionTask(intent, database)
             ACTION_DATABASE_UPDATE_COMPRESSION_TASK -> buildDatabaseUpdateCompressionActionTask(intent, database)
             ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK -> buildDatabaseRemoveUnlinkedDataActionTask(intent, database)
             ACTION_DATABASE_UPDATE_NAME_TASK,
@@ -1204,7 +1204,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         }
     }
 
-    private fun buildDatabaseImportCsvActionTask(
+    private fun buildDatabaseImportActionTask(
         intent: Intent,
         database: ContextualDatabase,
     ): ActionRunnable? {
@@ -1217,7 +1217,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             if (parentId == null || entrySource == null) return null
             val saveDatabase = intent.getBooleanExtra(SAVE_DATABASE_KEY, false)
             database.getGroupById(parentId)?.let { parent ->
-                ImportCsvRunnable(this,
+                ImportRunnable(this,
                     database,
                     entrySource,
                     parent,
@@ -1387,7 +1387,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         const val ACTION_DATABASE_DELETE_NODES_TASK = "ACTION_DATABASE_DELETE_NODES_TASK"
         const val ACTION_DATABASE_RESTORE_ENTRY_HISTORY = "ACTION_DATABASE_RESTORE_ENTRY_HISTORY"
         const val ACTION_DATABASE_DELETE_ENTRY_HISTORY = "ACTION_DATABASE_DELETE_ENTRY_HISTORY"
-        const val ACTION_DATABASE_IMPORT_CSV_TASK = "ACTION_DATABASE_IMPORT_CSV_TASK"
+        const val ACTION_DATABASE_IMPORT_TASK = "ACTION_DATABASE_IMPORT_TASK"
         const val ACTION_DATABASE_UPDATE_NAME_TASK = "ACTION_DATABASE_UPDATE_NAME_TASK"
         const val ACTION_DATABASE_UPDATE_DESCRIPTION_TASK = "ACTION_DATABASE_UPDATE_DESCRIPTION_TASK"
         const val ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK = "ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK"

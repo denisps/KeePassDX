@@ -25,7 +25,7 @@ import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.hardware.HardwareKey
 
-class ImportCsvRunnable(
+class ImportRunnable(
     context: Context,
     database: ContextualDatabase,
     private val mEntrySource: Iterator<Entry>,

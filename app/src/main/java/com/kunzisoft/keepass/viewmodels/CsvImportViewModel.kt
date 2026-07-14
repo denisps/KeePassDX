@@ -80,7 +80,7 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
         val reader = csvReader ?: return
         val currentMapping = mapping.value ?: return
         csvReader = null
-        databaseTaskProvider.startDatabaseImportCsv(
+        databaseTaskProvider.startDatabaseImport(
             CsvEntryIterator(reader, currentMapping, database),
             parent.nodeId,
             true

@@ -319,7 +319,7 @@
     <string name="autofill_manual_selection_summary">Rāda iespēju ļaut lietotājam pašrocīgi atlasīt datubāzes ierakstu</string>
     <string name="contribution">Sniegt savu artavu</string>
     <string name="menu_import_csv">Importēt CSV</string>
-    <string name="csv_import_title">CSV imports</string>
+    <string name="import_title">imports</string>
     <string name="csv_import_map_fields">Kartēt laukus</string>
     <string name="csv_import_confirm">Importēt</string>
     <string name="csv_field_title">Nosaukums</string>

@@ -527,7 +527,7 @@
     <string name="warning_database_revoked">Accès au dossier révoqué par le gestionnaire de fichiers, fermer la base de données et la rouvrir à partir de son emplacement.</string>
     <string name="warning_database_info_changed">Les informations contenues dans votre fichier de base de données ont été modifiées en dehors de l\'application.</string>
     <string name="menu_import_csv">Importer CSV</string>
-    <string name="csv_import_title">Importation CSV</string>
+    <string name="import_title">Importation</string>
     <string name="csv_import_map_fields">Mapper les champs</string>
     <string name="csv_import_confirm">Importer</string>
     <string name="csv_field_title">Titre</string>

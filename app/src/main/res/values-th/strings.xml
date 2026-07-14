@@ -264,7 +264,7 @@
     <string name="menu_delete">ลบ</string>
     <string name="menu_cancel">ยกเลิก</string>
     <string name="menu_import_csv">นำเข้า CSV</string>
-    <string name="csv_import_title">การนำเข้า CSV</string>
+    <string name="import_title">การนำเข้า</string>
     <string name="csv_import_map_fields">จับคู่ฟิลด์</string>
     <string name="csv_import_confirm">นำเข้า</string>
     <string name="csv_field_title">ชื่อเรื่อง</string>

@@ -28,7 +28,7 @@
     <string name="contribution">Urun Rembuk</string>
     <string name="contact">Nomer Hape</string>
     <string name="menu_import_csv">Impor CSV</string>
-    <string name="csv_import_title">Impor CSV</string>
+    <string name="import_title">Impor</string>
     <string name="csv_import_map_fields">Padhakake kolom</string>
     <string name="csv_import_confirm">Impor</string>
     <string name="csv_field_title">Judhul</string>

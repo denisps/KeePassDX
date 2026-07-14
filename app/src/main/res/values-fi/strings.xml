@@ -399,7 +399,7 @@
     <string name="menu_external_icon">Ulkoinen kuvake</string>
     <string name="search_mode">Hakutila</string>
     <string name="menu_import_csv">Tuo CSV</string>
-    <string name="csv_import_title">CSV-tuonti</string>
+    <string name="import_title">tuonti</string>
     <string name="csv_import_map_fields">Yhdistä kentät</string>
     <string name="csv_import_confirm">Tuo</string>
     <string name="csv_field_title">Otsikko</string>

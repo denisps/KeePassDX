@@ -146,7 +146,7 @@
     <string name="menu_save_database">Məlumatları yadda saxla</string>
     <string name="menu_merge_database">Məlumatları birləşdir</string>
     <string name="menu_import_csv">CSV idxal et</string>
-    <string name="csv_import_title">CSV idxalı</string>
+    <string name="import_title">idxalı</string>
     <string name="csv_import_map_fields">Sahələri uyğunlaşdır</string>
     <string name="csv_import_confirm">İdxal et</string>
     <string name="csv_field_title">Başlıq</string>

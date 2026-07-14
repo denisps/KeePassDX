@@ -421,7 +421,7 @@
     <string name="export_app_properties_summary">Crea un fitxer per exportar la configuració de l\'aplicació</string>
     <string name="permission">Permís</string>
     <string name="menu_import_csv">Importa CSV</string>
-    <string name="csv_import_title">Importació CSV</string>
+    <string name="import_title">Importació</string>
     <string name="csv_import_map_fields">Assigna els camps</string>
     <string name="csv_import_confirm">Importa</string>
     <string name="csv_field_title">Títol</string>

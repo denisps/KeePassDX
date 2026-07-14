@@ -291,7 +291,7 @@
     <string name="menu_save_database">Išsaugoti duomenis</string>
     <string name="menu_merge_database">Sujungti duomenis</string>
     <string name="menu_import_csv">Importuoti CSV</string>
-    <string name="csv_import_title">CSV importas</string>
+    <string name="import_title">importas</string>
     <string name="csv_import_map_fields">Susieti laukus</string>
     <string name="csv_import_confirm">Importuoti</string>
     <string name="csv_field_title">Pavadinimas</string>

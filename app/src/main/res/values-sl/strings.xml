@@ -67,7 +67,7 @@
     <string name="menu_copy">Kopiraj</string>
     <string name="menu_donate">Doniraj</string>
     <string name="menu_import_csv">Uvozi CSV</string>
-    <string name="csv_import_title">Uvoz CSV</string>
+    <string name="import_title">Uvoz</string>
     <string name="csv_import_map_fields">Preslikaj polja</string>
     <string name="csv_import_confirm">Uvozi</string>
     <string name="csv_field_title">Naslov</string>

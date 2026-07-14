@@ -340,7 +340,7 @@
     <string name="menu_move">Mugitu</string>
     <string name="menu_merge_database">Datuak fusionatu</string>
     <string name="menu_import_csv">Inportatu CSV</string>
-    <string name="csv_import_title">CSV inportazioa</string>
+    <string name="import_title">inportazioa</string>
     <string name="csv_import_map_fields">Eremuak mapatu</string>
     <string name="csv_import_confirm">Inportatu</string>
     <string name="csv_field_title">Izenburua</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_import_csv">CSV импорттау</string>
-    <string name="csv_import_title">CSV импорты</string>
+    <string name="import_title">импорты</string>
     <string name="csv_import_map_fields">Өрістерді сәйкестендіру</string>
     <string name="csv_import_confirm">Импорттау</string>
     <string name="csv_field_title">Атауы</string>

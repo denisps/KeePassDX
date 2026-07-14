@@ -441,7 +441,7 @@
     <string name="menu_keystore_remove_key">احذف رمز فك القفل الجهاز</string>
     <string name="menu_form_filling_settings">ملء النموذج</string>
     <string name="menu_import_csv">استيراد CSV</string>
-    <string name="csv_import_title">استيراد CSV</string>
+    <string name="import_title">استيراد</string>
     <string name="csv_import_map_fields">تعيين الحقول</string>
     <string name="csv_import_confirm">استيراد</string>
     <string name="csv_field_title">العنوان</string>

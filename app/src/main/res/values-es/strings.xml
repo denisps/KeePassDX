@@ -505,7 +505,7 @@
     <string name="warning_database_info_changed_options">Fusionar los datos, sobrescribir las modificaciones externas guardando la base de datos o recargarla con los últimos cambios.</string>
     <string name="warning_database_info_changed">La información contenida en su archivo de base de datos ha sido modificada fuera de la aplicación.</string>
     <string name="menu_import_csv">Importar CSV</string>
-    <string name="csv_import_title">Importación CSV</string>
+    <string name="import_title">Importación</string>
     <string name="csv_import_map_fields">Asignar campos</string>
     <string name="csv_import_confirm">Importar</string>
     <string name="csv_field_title">Título</string>

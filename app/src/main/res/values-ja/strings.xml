@@ -502,7 +502,7 @@
     <string name="warning_database_info_changed_options">データベースを保存して外部の変更を上書きするか、再度読み込んで最新の変更を反映させてください。</string>
     <string name="warning_database_info_changed">データベース ファイルに含まれる情報は、アプリの外部で変更されています。</string>
     <string name="menu_import_csv">CSVをインポート</string>
-    <string name="csv_import_title">CSVインポート</string>
+    <string name="import_title">インポート</string>
     <string name="csv_import_map_fields">フィールドのマッピング</string>
     <string name="csv_import_confirm">インポート</string>
     <string name="csv_field_title">タイトル</string>

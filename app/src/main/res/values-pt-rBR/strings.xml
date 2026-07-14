@@ -456,7 +456,7 @@
     <string name="autofill_block_restart">Reinicie o aplicativo que contém o formulário para ativar o bloqueio.</string>
     <string name="menu_keystore_remove_key">Excluir chave de desbloqueio do dispositivo</string>
     <string name="menu_import_csv">Importar CSV</string>
-    <string name="csv_import_title">Importação CSV</string>
+    <string name="import_title">Importação</string>
     <string name="csv_import_map_fields">Mapear campos</string>
     <string name="csv_import_confirm">Importar</string>
     <string name="csv_field_title">Título</string>

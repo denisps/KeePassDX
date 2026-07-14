@@ -272,7 +272,7 @@
     <string name="menu_save_database">Lưu dữ liệu</string>
     <string name="menu_merge_database">Hợp nhất dữ liệu</string>
     <string name="menu_import_csv">Nhập CSV</string>
-    <string name="csv_import_title">Nhập CSV</string>
+    <string name="import_title">Nhập</string>
     <string name="csv_import_map_fields">Ánh xạ trường</string>
     <string name="csv_import_confirm">Nhập</string>
     <string name="csv_field_title">Tiêu đề</string>

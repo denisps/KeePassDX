@@ -318,7 +318,7 @@
     <string name="list_entries_show_username_title">ব্যবহারকারীর নাম দেখান</string>
     <string name="show_uuid_summary">একটি এন্ট্রি বা একটি গ্রুপের সাথে সংযুক্ত UUID প্রদর্শন করে</string>
     <string name="menu_import_csv">CSV আমদানি করুন</string>
-    <string name="csv_import_title">CSV আমদানি</string>
+    <string name="import_title">আমদানি</string>
     <string name="csv_import_map_fields">ক্ষেত্র ম্যাপ করুন</string>
     <string name="csv_import_confirm">আমদানি করুন</string>
     <string name="csv_field_title">শিরোনাম</string>

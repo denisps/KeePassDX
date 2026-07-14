@@ -476,7 +476,7 @@
     <string name="info">Informații</string>
     <string name="menu_merge_database">Îmbinare date</string>
     <string name="menu_import_csv">Importă CSV</string>
-    <string name="csv_import_title">Import CSV</string>
+    <string name="import_title">Import</string>
     <string name="csv_import_map_fields">Asociază câmpurile</string>
     <string name="csv_import_confirm">Importă</string>
     <string name="csv_field_title">Titlu</string>

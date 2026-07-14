@@ -518,7 +518,7 @@
     <string name="error_rebuild_list">Die Liste kann nicht ordnungsgemäß neu erstellt werden.</string>
     <string name="error_database_uri_null">Datenbank-URI kann nicht abgerufen werden.</string>
     <string name="menu_import_csv">CSV importieren</string>
-    <string name="csv_import_title">CSV-Import</string>
+    <string name="import_title">Import</string>
     <string name="csv_import_map_fields">Felder zuordnen</string>
     <string name="csv_import_confirm">Importieren</string>
     <string name="csv_field_title">Titel</string>

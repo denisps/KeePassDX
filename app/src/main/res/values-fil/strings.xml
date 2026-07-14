@@ -260,7 +260,7 @@
     <string name="menu_save_database">I-save ang data</string>
     <string name="menu_merge_database">I-merge ang data</string>
     <string name="menu_import_csv">I-import ang CSV</string>
-    <string name="csv_import_title">Pag-import ng CSV</string>
+    <string name="import_title">Pag-import</string>
     <string name="csv_import_map_fields">I-map ang mga field</string>
     <string name="csv_import_confirm">I-import</string>
     <string name="csv_field_title">Pamagat</string>

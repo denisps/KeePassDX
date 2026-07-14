@@ -212,7 +212,7 @@
     <string name="menu_lock">Kyçe bazën e të dhënave</string>
     <string name="menu_save_database">Ruaji të dhënat</string>
     <string name="menu_import_csv">Importo CSV</string>
-    <string name="csv_import_title">Importim CSV</string>
+    <string name="import_title">Importim</string>
     <string name="csv_import_map_fields">Përshtat fushat</string>
     <string name="csv_import_confirm">Importo</string>
     <string name="csv_field_title">Titulli</string>

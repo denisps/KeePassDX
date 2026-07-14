@@ -269,7 +269,7 @@
     <string name="uppercase">대문자</string>
     <string name="menu_security_settings">보안 설정</string>
     <string name="menu_import_csv">CSV 가져오기</string>
-    <string name="csv_import_title">CSV 가져오기</string>
+    <string name="import_title">가져오기</string>
     <string name="csv_import_map_fields">필드 매핑</string>
     <string name="csv_import_confirm">가져오기</string>
     <string name="csv_field_title">제목</string>

@@ -503,7 +503,7 @@
     <string name="warning_database_info_changed">Oplysningerne i databasefilen er blevet ændret uden for appen.</string>
     <string name="menu_keystore_remove_key">Slet enheds oplåsningsnøgle</string>
     <string name="menu_import_csv">Importer CSV</string>
-    <string name="csv_import_title">CSV-import</string>
+    <string name="import_title">import</string>
     <string name="csv_import_map_fields">Tilknyt felter</string>
     <string name="csv_import_confirm">Importer</string>
     <string name="csv_field_title">Titel</string>

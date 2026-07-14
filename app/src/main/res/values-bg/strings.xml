@@ -127,7 +127,7 @@
     <string name="sort_title">Заглавие</string>
     <string name="discard_changes">Отхвърляне на промените?</string>
     <string name="menu_import_csv">Импортирай CSV</string>
-    <string name="csv_import_title">Импортиране на CSV</string>
+    <string name="import_title">Импортиране</string>
     <string name="csv_import_map_fields">Съпостави полетата</string>
     <string name="csv_import_confirm">Импортирай</string>
     <string name="csv_field_title">Заглавие</string>

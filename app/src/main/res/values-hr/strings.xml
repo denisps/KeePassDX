@@ -506,7 +506,7 @@
     <string name="warning_database_info_changed_options">Sjedini podatke, prepiši vanjske promjene spremanjem baze podataka ili je ponovo učitaj s najnovijim promjenama.</string>
     <string name="warning_database_info_changed">Podaci u datoteci tvoje baze podataka izmijenjeni su izvan aplikacije.</string>
     <string name="menu_import_csv">Uvezi CSV</string>
-    <string name="csv_import_title">CSV uvoz</string>
+    <string name="import_title">uvoz</string>
     <string name="csv_import_map_fields">Mapiraj polja</string>
     <string name="csv_import_confirm">Uvezi</string>
     <string name="csv_field_title">Naslov</string>

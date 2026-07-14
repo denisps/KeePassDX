@@ -416,7 +416,7 @@
     <string name="menu_open_file_read_and_write">讀寫</string>
     <string name="menu_paste">貼上</string>
     <string name="menu_import_csv">导入 CSV</string>
-    <string name="csv_import_title">CSV 导入</string>
+    <string name="import_title">导入</string>
     <string name="csv_import_map_fields">映射字段</string>
     <string name="csv_import_confirm">导入</string>
     <string name="csv_field_title">标题</string>

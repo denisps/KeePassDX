@@ -511,7 +511,7 @@
     <string name="master_key_settings_summary">Ändra, förnya</string>
     <string name="menu_merge_database">Sammanfoga data</string>
     <string name="menu_import_csv">Importera CSV</string>
-    <string name="csv_import_title">CSV-import</string>
+    <string name="import_title">import</string>
     <string name="csv_import_map_fields">Mappa fält</string>
     <string name="csv_import_confirm">Importera</string>
     <string name="csv_field_title">Titel</string>

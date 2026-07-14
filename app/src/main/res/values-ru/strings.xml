@@ -511,7 +511,7 @@
     <string name="warning_database_info_changed_options">Объединить данные, перезаписав внешние изменения, или перезагрузить её с последними изменениями.</string>
     <string name="warning_database_info_changed">Информация, содержащаяся в файле базы, была изменена вне этого приложения.</string>
     <string name="menu_import_csv">Импорт CSV</string>
-    <string name="csv_import_title">Импорт CSV</string>
+    <string name="import_title">Импорт</string>
     <string name="csv_import_map_fields">Сопоставить поля</string>
     <string name="csv_import_confirm">Импорт</string>
     <string name="csv_field_title">Название</string>

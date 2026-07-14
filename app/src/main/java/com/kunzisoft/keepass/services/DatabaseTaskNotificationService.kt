@@ -1211,9 +1211,9 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         return if (intent.hasExtra(PARENT_ID_KEY)
             && intent.hasExtra(SAVE_DATABASE_KEY)
         ) {
-            updateMessage(R.string.csv_import_title)
+            updateMessage(R.string.import_title)
             val parentId: NodeId<*>? = intent.getParcelableExtraCompat(PARENT_ID_KEY)
-            val entrySource: Iterator<Entry>? = retrievePendingCsvEntrySource()
+            val entrySource: Iterator<Entry>? = retrievePendingEntrySource()
             if (parentId == null || entrySource == null) return null
             val saveDatabase = intent.getBooleanExtra(SAVE_DATABASE_KEY, false)
             database.getGroupById(parentId)?.let { parent ->
@@ -1363,14 +1363,14 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
 
         private const val CHANNEL_DATABASE_ID = "com.kunzisoft.keepass.notification.channel.database"
 
-        private val pendingCsvEntrySource = java.util.concurrent.atomic.AtomicReference<Iterator<Entry>?>(null)
+        private val pendingEntrySource = java.util.concurrent.atomic.AtomicReference<Iterator<Entry>?>(null)
 
-        fun storePendingCsvEntrySource(source: Iterator<Entry>) {
-            pendingCsvEntrySource.set(source)
+        fun storePendingEntrySource(source: Iterator<Entry>) {
+            pendingEntrySource.set(source)
         }
 
-        private fun retrievePendingCsvEntrySource(): Iterator<Entry>? {
-            return pendingCsvEntrySource.getAndSet(null)
+        private fun retrievePendingEntrySource(): Iterator<Entry>? {
+            return pendingEntrySource.getAndSet(null)
         }
 
         const val ACTION_DATABASE_CREATE_TASK = "ACTION_DATABASE_CREATE_TASK"

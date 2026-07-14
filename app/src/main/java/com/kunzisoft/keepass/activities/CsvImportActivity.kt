@@ -63,7 +63,7 @@ class CsvImportActivity : DatabaseLockActivity() {
 
         coordinatorLayout = findViewById(R.id.coordinator_layout)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = getString(R.string.csv_import_title)
+        toolbar.title = getString(R.string.import_title)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

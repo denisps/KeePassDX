@@ -289,7 +289,7 @@
     <string name="menu_save_database">Сачувај податке</string>
     <string name="menu_merge_database">Обједини податке</string>
     <string name="menu_import_csv">Увези CSV</string>
-    <string name="csv_import_title">CSV увоз</string>
+    <string name="import_title">увоз</string>
     <string name="csv_import_map_fields">Упари поља</string>
     <string name="csv_import_confirm">Увези</string>
     <string name="csv_field_title">Наслов</string>

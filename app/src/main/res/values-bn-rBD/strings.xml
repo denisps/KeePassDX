@@ -91,7 +91,7 @@
     <string name="sort_last_access_time">প্রবেশ</string>
     <string name="search">অনুসন্ধান</string>
     <string name="menu_import_csv">CSV আমদানি করুন</string>
-    <string name="csv_import_title">CSV আমদানি</string>
+    <string name="import_title">আমদানি</string>
     <string name="csv_import_map_fields">ক্ষেত্র ম্যাপ করুন</string>
     <string name="csv_import_confirm">আমদানি করুন</string>
     <string name="csv_field_title">শিরোনাম</string>

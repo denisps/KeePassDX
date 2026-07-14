@@ -2,7 +2,7 @@
 <resources>
     <string name="contact">رابطہ</string>
     <string name="menu_import_csv">CSV درآمد کریں</string>
-    <string name="csv_import_title">CSV درآمد</string>
+    <string name="import_title">درآمد</string>
     <string name="csv_import_map_fields">فیلڈز کی مطابقت کریں</string>
     <string name="csv_import_confirm">درآمد کریں</string>
     <string name="csv_field_title">عنوان</string>

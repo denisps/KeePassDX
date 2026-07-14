@@ -260,7 +260,7 @@
     <string name="menu_save_database">Захаваць дадзеныя</string>
     <string name="menu_merge_database">Аб\'яднаць дадзеныя</string>
     <string name="menu_import_csv">Імпартаваць CSV</string>
-    <string name="csv_import_title">Імпарт CSV</string>
+    <string name="import_title">Імпарт</string>
     <string name="csv_import_map_fields">Супаставіць палі</string>
     <string name="csv_import_confirm">Імпартаваць</string>
     <string name="csv_field_title">Назва</string>

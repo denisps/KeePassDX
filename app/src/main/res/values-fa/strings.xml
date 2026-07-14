@@ -273,7 +273,7 @@
     <string name="menu_external_icon">نماد خارجی</string>
     <string name="menu_keystore_remove_key">حذف کلید باز کردن پیشرفته</string>
     <string name="menu_import_csv">درون‌ریزی CSV</string>
-    <string name="csv_import_title">درون‌ریزی CSV</string>
+    <string name="import_title">درون‌ریزی</string>
     <string name="csv_import_map_fields">نگاشت فیلدها</string>
     <string name="csv_import_confirm">درون‌ریزی</string>
     <string name="csv_field_title">عنوان</string>

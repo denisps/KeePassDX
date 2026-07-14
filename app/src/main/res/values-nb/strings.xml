@@ -477,7 +477,7 @@
     <string name="enter">Enter</string>
     <string name="hint_icon_name">Ikonnavn</string>
     <string name="menu_import_csv">Importer CSV</string>
-    <string name="csv_import_title">CSV-import</string>
+    <string name="import_title">import</string>
     <string name="csv_import_map_fields">Tilordne felter</string>
     <string name="csv_import_confirm">Importer</string>
     <string name="csv_field_title">Tittel</string>

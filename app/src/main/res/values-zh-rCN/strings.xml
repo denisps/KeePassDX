@@ -510,7 +510,7 @@
     <string name="warning_database_info_changed_options">保存数据库或重新加载包含最新更改的数据库来合并数据和覆盖外部修改。</string>
     <string name="warning_database_info_changed">数据库文件中包含的信息已在应用之外被修改。</string>
     <string name="menu_import_csv">导入 CSV</string>
-    <string name="csv_import_title">CSV 导入</string>
+    <string name="import_title">导入</string>
     <string name="csv_import_map_fields">映射字段</string>
     <string name="csv_import_confirm">导入</string>
     <string name="csv_field_title">标题</string>

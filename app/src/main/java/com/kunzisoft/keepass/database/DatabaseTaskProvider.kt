@@ -453,8 +453,8 @@ class DatabaseTaskProvider(
         }, ACTION_DATABASE_DELETE_ENTRY_HISTORY)
     }
 
-    fun startDatabaseImportCsv(entrySource: Iterator<Entry>, parentId: NodeId<*>, save: Boolean) {
-        DatabaseTaskNotificationService.storePendingCsvEntrySource(entrySource)
+    fun startDatabaseImport(entrySource: Iterator<Entry>, parentId: NodeId<*>, save: Boolean) {
+        DatabaseTaskNotificationService.storePendingEntrySource(entrySource)
         start(Bundle().apply {
             putParcelable(DatabaseTaskNotificationService.PARENT_ID_KEY, parentId)
             putBoolean(DatabaseTaskNotificationService.SAVE_DATABASE_KEY, save)

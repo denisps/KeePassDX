@@ -505,7 +505,7 @@
     <string name="warning_database_info_changed_options">Scal dane, zastąp modyfikacje zewnętrzne poprzez zapisanie bazy danych lub ponownie załaduj ją z najnowszymi zmianami.</string>
     <string name="warning_database_info_changed">Informacje zawarte w pliku bazy danych zostały zmodyfikowane poza aplikacją.</string>
     <string name="menu_import_csv">Importuj CSV</string>
-    <string name="csv_import_title">Import CSV</string>
+    <string name="import_title">Import</string>
     <string name="csv_import_map_fields">Mapuj pola</string>
     <string name="csv_import_confirm">Importuj</string>
     <string name="csv_field_title">Tytuł</string>

@@ -249,7 +249,7 @@
     <string name="menu_paste">Lim inn</string>
     <string name="menu_merge_database">Slå saman data</string>
     <string name="menu_import_csv">Importer CSV</string>
-    <string name="csv_import_title">CSV-import</string>
+    <string name="import_title">import</string>
     <string name="csv_import_map_fields">Tilordne felt</string>
     <string name="csv_import_confirm">Importer</string>
     <string name="csv_field_title">Tittel</string>

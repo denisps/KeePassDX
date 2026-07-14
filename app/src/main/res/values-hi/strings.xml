@@ -168,7 +168,7 @@
     <string name="error_duplicate_file">फ़ाइल डेटा पहले से उपलब्ध है।</string>
     <string name="info">जानकारी</string>
     <string name="menu_import_csv">CSV आयात करें</string>
-    <string name="csv_import_title">CSV आयात</string>
+    <string name="import_title">आयात</string>
     <string name="csv_import_map_fields">फ़ील्ड मैप करें</string>
     <string name="csv_import_confirm">आयात करें</string>
     <string name="csv_field_title">शीर्षक</string>

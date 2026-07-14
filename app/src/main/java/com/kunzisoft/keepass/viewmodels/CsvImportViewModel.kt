@@ -23,102 +23,68 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.DatabaseTaskProvider
-import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
+import com.kunzisoft.keepass.utils.CsvEntryIterator
 import com.kunzisoft.keepass.utils.CsvReader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class CsvImportViewModel(application: Application) : AndroidViewModel(application) {
 
     val headers = MutableLiveData<List<String>>()
-    val mapping = MutableLiveData<MutableMap<Int, FieldType>>()
-    val fileUri = MutableLiveData<Uri>()
+    val mapping = MutableLiveData<MutableMap<Int, CsvEntryIterator.FieldType>>()
 
     private val databaseTaskProvider = DatabaseTaskProvider(application)
-
-    /** Holds the open [CsvReader] between [setFile] and [startImport]; closed in [onCleared]. */
     private var csvReader: CsvReader? = null
 
-    enum class FieldType {
-        IGNORE, TITLE, USERNAME, PASSWORD, URL, NOTES
-    }
-
-    /**
-     * Opens [uri] via a [CsvReader], reads the first (header) record to populate [headers]
-     * and auto-detect [mapping], then retains the reader for [startImport].
-     * The header field names are non-sensitive, so they are converted to [String] for display.
-     */
     fun setFile(uri: Uri) {
-        fileUri.value = uri
         csvReader?.close()
-        val reader = CsvReader(getApplication<Application>().contentResolver, uri)
-        csvReader = reader
-        if (!reader.hasNext()) return
-        // The first record is the header row.
-        val headerRecord = reader.next()
-        val headerList = headerRecord.map { String(it) }
-        headers.value = headerList
-        // Auto-detect field mapping from header names.
-        val newMapping = mutableMapOf<Int, FieldType>()
-        headerList.forEachIndexed { index, s ->
-            newMapping[index] = when (s.trim().lowercase()) {
-                "name", "title" -> FieldType.TITLE
-                "url"           -> FieldType.URL
-                "username", "login", "user" -> FieldType.USERNAME
-                "password"      -> FieldType.PASSWORD
-                "notes", "note" -> FieldType.NOTES
-                else            -> FieldType.IGNORE
+        csvReader = null
+        viewModelScope.launch(Dispatchers.IO) {
+            val reader = try {
+                CsvReader(getApplication<Application>().contentResolver, uri)
+            } catch (e: IOException) {
+                return@launch
+            }
+            if (!reader.hasNext()) {
+                reader.close()
+                return@launch
+            }
+            val headerRecord = reader.next()
+            val headerList = headerRecord.map { String(it) }
+            val newMapping = mutableMapOf<Int, CsvEntryIterator.FieldType>()
+            headerList.forEachIndexed { index, s ->
+                newMapping[index] = when (s.trim().lowercase()) {
+                    "name", "title"             -> CsvEntryIterator.FieldType.TITLE
+                    "url"                       -> CsvEntryIterator.FieldType.URL
+                    "username", "login", "user" -> CsvEntryIterator.FieldType.USERNAME
+                    "password"                  -> CsvEntryIterator.FieldType.PASSWORD
+                    "notes", "note"             -> CsvEntryIterator.FieldType.NOTES
+                    else                        -> CsvEntryIterator.FieldType.IGNORE
+                }
+            }
+            withContext(Dispatchers.Main) {
+                csvReader = reader
+                headers.value = headerList
+                mapping.value = newMapping
             }
         }
-        mapping.value = newMapping
-        // headerRecord CharArrays will be zeroed on the first reader.next() call in startImport.
     }
 
-    /**
-     * Iterates the remaining records of the [CsvReader] opened by [setFile], creates [Entry]
-     * objects, then launches the database import task.
-     *
-     * Password fields are copied as [CharArray] (never converted to [String]) so that secret
-     * data does not linger on the heap as an immutable [String] object.
-     * Each record's [CharArray]s are zeroed by the reader as the iterator advances.
-     * The reader is closed and nulled out after all records have been consumed.
-     */
     fun startImport(database: ContextualDatabase, parent: Group) {
         val reader = csvReader ?: return
         val currentMapping = mapping.value ?: return
-
-        val entries = mutableListOf<Entry>()
-        while (reader.hasNext()) {
-            val record = reader.next()
-            val entry = database.createEntry() ?: continue
-            record.forEachIndexed { index, field ->
-                when (currentMapping[index] ?: FieldType.IGNORE) {
-                    FieldType.TITLE    -> entry.title    = String(field)
-                    FieldType.USERNAME -> entry.username = String(field)
-                    // Copy the CharArray so the entry owns its password independently of the
-                    // reader's scratch memory, which will be zeroed on the next iteration.
-                    FieldType.PASSWORD -> entry.password = field.copyOf()
-                    FieldType.URL      -> entry.url      = String(field)
-                    FieldType.NOTES    -> entry.notes    = String(field)
-                    FieldType.IGNORE   -> {}
-                }
-            }
-            if (entry.title.isEmpty() && entry.url.isNotEmpty()) {
-                entry.title = entry.url
-            }
-            if (entry.title.isNotEmpty() || entry.username.isNotEmpty()) {
-                entries.add(entry)
-            }
-        }
-
-        // All records consumed — zero and release the reader.
-        reader.close()
         csvReader = null
-
-        if (entries.isNotEmpty()) {
-            databaseTaskProvider.startDatabaseImportCsv(entries, parent.nodeId, true)
-        }
+        databaseTaskProvider.startDatabaseImportCsv(
+            CsvEntryIterator(reader, currentMapping, database),
+            parent.nodeId,
+            true
+        )
     }
 
     override fun onCleared() {

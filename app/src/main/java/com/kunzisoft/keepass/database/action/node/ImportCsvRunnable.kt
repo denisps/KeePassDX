@@ -28,22 +28,26 @@ import com.kunzisoft.keepass.hardware.HardwareKey
 class ImportCsvRunnable(
     context: Context,
     database: ContextualDatabase,
-    private val mEntries: List<Entry>,
+    private val mEntrySource: Iterator<Entry>,
     private val mParent: Group,
     save: Boolean,
     afterActionNodesFinish: AfterActionNodesFinish?,
     challengeResponseRetriever: (HardwareKey, ByteArray?) -> ByteArray
 ) : ActionNodeDatabaseRunnable(context, database, afterActionNodesFinish, save, challengeResponseRetriever) {
 
+    private val mImportedEntries = mutableListOf<Entry>()
+
     override fun nodeAction() {
         mParent.touch(modified = true, touchParents = true)
-        mEntries.forEach { entry ->
+        for (entry in mEntrySource) {
             entry.touch(modified = true, touchParents = true)
             database.addEntryTo(entry, mParent)
+            mImportedEntries.add(entry)
         }
+        (mEntrySource as? java.io.Closeable)?.close()
     }
 
     override fun nodeFinish(): ActionNodesValues {
-        return ActionNodesValues(listOf(), mEntries)
+        return ActionNodesValues(listOf(), mImportedEntries)
     }
 }

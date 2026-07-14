@@ -1213,13 +1213,13 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         ) {
             updateMessage(R.string.csv_import_title)
             val parentId: NodeId<*>? = intent.getParcelableExtraCompat(PARENT_ID_KEY)
-            val entries: List<Entry>? = retrievePendingCsvEntries()
-            if (parentId == null || entries == null) return null
+            val entrySource: Iterator<Entry>? = retrievePendingCsvEntrySource()
+            if (parentId == null || entrySource == null) return null
             val saveDatabase = intent.getBooleanExtra(SAVE_DATABASE_KEY, false)
             database.getGroupById(parentId)?.let { parent ->
                 ImportCsvRunnable(this,
                     database,
-                    entries,
+                    entrySource,
                     parent,
                     !database.isReadOnly && saveDatabase,
                     AfterActionNodesRunnable()
@@ -1363,16 +1363,14 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
 
         private const val CHANNEL_DATABASE_ID = "com.kunzisoft.keepass.notification.channel.database"
 
-        // Large entry lists cannot be passed through Binder IPC (1 MB limit), so we
-        // use this in-process store instead of putting them in the Intent bundle.
-        private val pendingCsvEntries = java.util.concurrent.atomic.AtomicReference<List<Entry>?>(null)
+        private val pendingCsvEntrySource = java.util.concurrent.atomic.AtomicReference<Iterator<Entry>?>(null)
 
-        fun storePendingCsvEntries(entries: List<Entry>) {
-            pendingCsvEntries.set(entries)
+        fun storePendingCsvEntrySource(source: Iterator<Entry>) {
+            pendingCsvEntrySource.set(source)
         }
 
-        private fun retrievePendingCsvEntries(): List<Entry>? {
-            return pendingCsvEntries.getAndSet(null)
+        private fun retrievePendingCsvEntrySource(): Iterator<Entry>? {
+            return pendingCsvEntrySource.getAndSet(null)
         }
 
         const val ACTION_DATABASE_CREATE_TASK = "ACTION_DATABASE_CREATE_TASK"

@@ -58,6 +58,13 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
             val headerRecord = reader.next()
             val headerList = headerRecord.map { String(it) }
             val newMapping = mutableMapOf<Int, EntryMappingIterator.FieldType>()
+            
+            // Chrome password CSV fields:
+            // name,url,username,password,note
+            
+            // Firefox password CSV fields:
+            // url,username,password,httpRealm,formActionOrigin,guid,timeCreated,timeLastUsed,timePasswordChanged
+            
             headerList.forEachIndexed { index, s ->
                 newMapping[index] = when (s.trim().lowercase()) {
                     "name", "title"             -> EntryMappingIterator.FieldType.TITLE

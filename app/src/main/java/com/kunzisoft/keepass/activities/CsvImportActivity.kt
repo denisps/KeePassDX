@@ -42,7 +42,7 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
-import com.kunzisoft.keepass.utils.CsvEntryIterator
+import com.kunzisoft.keepass.utils.EntryMappingIterator
 import com.kunzisoft.keepass.viewmodels.CsvImportViewModel
 
 class CsvImportActivity : DatabaseLockActivity() {
@@ -130,18 +130,18 @@ class CsvImportActivity : DatabaseLockActivity() {
 
             fun bind(header: String, position: Int) {
                 textHeader.text = header
-                val fieldTypes = CsvEntryIterator.FieldType.values()
+                val fieldTypes = EntryMappingIterator.FieldType.values()
                 val adapter = ArrayAdapter(
                     itemView.context,
                     android.R.layout.simple_spinner_item,
                     fieldTypes.map { type ->
                         when (type) {
-                            CsvEntryIterator.FieldType.IGNORE -> getString(R.string.csv_field_ignore)
-                            CsvEntryIterator.FieldType.TITLE -> getString(R.string.csv_field_title)
-                            CsvEntryIterator.FieldType.USERNAME -> getString(R.string.csv_field_username)
-                            CsvEntryIterator.FieldType.PASSWORD -> getString(R.string.csv_field_password)
-                            CsvEntryIterator.FieldType.URL -> getString(R.string.csv_field_url)
-                            CsvEntryIterator.FieldType.NOTES -> getString(R.string.csv_field_notes)
+                            EntryMappingIterator.FieldType.IGNORE -> getString(R.string.csv_field_ignore)
+                            EntryMappingIterator.FieldType.TITLE -> getString(R.string.csv_field_title)
+                            EntryMappingIterator.FieldType.USERNAME -> getString(R.string.csv_field_username)
+                            EntryMappingIterator.FieldType.PASSWORD -> getString(R.string.csv_field_password)
+                            EntryMappingIterator.FieldType.URL -> getString(R.string.csv_field_url)
+                            EntryMappingIterator.FieldType.NOTES -> getString(R.string.csv_field_notes)
                         }
                     }
                 )

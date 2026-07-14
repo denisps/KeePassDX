@@ -27,8 +27,8 @@ import androidx.lifecycle.viewModelScope
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.DatabaseTaskProvider
 import com.kunzisoft.keepass.database.element.Group
-import com.kunzisoft.keepass.utils.CsvEntryIterator
 import com.kunzisoft.keepass.utils.CsvReader
+import com.kunzisoft.keepass.utils.EntryMappingIterator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,7 +37,7 @@ import java.io.IOException
 class CsvImportViewModel(application: Application) : AndroidViewModel(application) {
 
     val headers = MutableLiveData<List<String>>()
-    val mapping = MutableLiveData<MutableMap<Int, CsvEntryIterator.FieldType>>()
+    val mapping = MutableLiveData<MutableMap<Int, EntryMappingIterator.FieldType>>()
 
     private val databaseTaskProvider = DatabaseTaskProvider(application)
     private var csvReader: CsvReader? = null
@@ -57,15 +57,15 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
             }
             val headerRecord = reader.next()
             val headerList = headerRecord.map { String(it) }
-            val newMapping = mutableMapOf<Int, CsvEntryIterator.FieldType>()
+            val newMapping = mutableMapOf<Int, EntryMappingIterator.FieldType>()
             headerList.forEachIndexed { index, s ->
                 newMapping[index] = when (s.trim().lowercase()) {
-                    "name", "title"             -> CsvEntryIterator.FieldType.TITLE
-                    "url"                       -> CsvEntryIterator.FieldType.URL
-                    "username", "login", "user" -> CsvEntryIterator.FieldType.USERNAME
-                    "password"                  -> CsvEntryIterator.FieldType.PASSWORD
-                    "notes", "note"             -> CsvEntryIterator.FieldType.NOTES
-                    else                        -> CsvEntryIterator.FieldType.IGNORE
+                    "name", "title"             -> EntryMappingIterator.FieldType.TITLE
+                    "url"                       -> EntryMappingIterator.FieldType.URL
+                    "username", "login", "user" -> EntryMappingIterator.FieldType.USERNAME
+                    "password"                  -> EntryMappingIterator.FieldType.PASSWORD
+                    "notes", "note"             -> EntryMappingIterator.FieldType.NOTES
+                    else                        -> EntryMappingIterator.FieldType.IGNORE
                 }
             }
             withContext(Dispatchers.Main) {
@@ -81,7 +81,7 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
         val currentMapping = mapping.value ?: return
         csvReader = null
         databaseTaskProvider.startDatabaseImport(
-            CsvEntryIterator(reader, currentMapping, database),
+            EntryMappingIterator(reader, currentMapping, database),
             parent.nodeId,
             true
         )

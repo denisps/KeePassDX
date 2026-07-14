@@ -24,11 +24,12 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.hardware.HardwareKey
+import com.kunzisoft.keepass.utils.CloseableIterator
 
 class ImportRunnable(
     context: Context,
     database: ContextualDatabase,
-    private val mEntrySource: Iterator<Entry>,
+    private val mEntrySource: CloseableIterator<Entry>,
     private val mParent: Group,
     save: Boolean,
     afterActionNodesFinish: AfterActionNodesFinish?,
@@ -44,7 +45,7 @@ class ImportRunnable(
             database.addEntryTo(entry, mParent)
             mImportedEntries.add(entry)
         }
-        (mEntrySource as? java.io.Closeable)?.close()
+        mEntrySource.close()
     }
 
     override fun nodeFinish(): ActionNodesValues {

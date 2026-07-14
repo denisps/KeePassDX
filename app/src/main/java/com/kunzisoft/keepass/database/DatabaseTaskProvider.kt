@@ -83,6 +83,7 @@ import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.
 import com.kunzisoft.keepass.utils.DATABASE_START_TASK_ACTION
 import com.kunzisoft.keepass.utils.DATABASE_STOP_TASK_ACTION
 import com.kunzisoft.keepass.utils.putParcelableList
+import com.kunzisoft.keepass.utils.CloseableIterator
 import java.util.UUID
 
 /**
@@ -453,7 +454,7 @@ class DatabaseTaskProvider(
         }, ACTION_DATABASE_DELETE_ENTRY_HISTORY)
     }
 
-    fun startDatabaseImport(entrySource: Iterator<Entry>, parentId: NodeId<*>, save: Boolean) {
+    fun startDatabaseImport(entrySource: CloseableIterator<Entry>, parentId: NodeId<*>, save: Boolean) {
         DatabaseTaskNotificationService.storePendingEntrySource(entrySource)
         start(Bundle().apply {
             putParcelable(DatabaseTaskNotificationService.PARENT_ID_KEY, parentId)

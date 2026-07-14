@@ -21,22 +21,21 @@ package com.kunzisoft.keepass.utils
 
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Entry
-import java.io.Closeable
 
 /**
- * Lazily produces [Entry] objects from a [CsvReader] using a column-to-field [mapping].
+ * Lazily produces [Entry] objects from a record [reader] using a column-to-field [mapping].
  * Entry creation and field assignment happen on whichever thread calls [hasNext] / [next],
  * so the iterator should be advanced on a background thread.
  *
- * Password fields are stored as [CharArray] copies; the reader's scratch memory is zeroed
- * by [CsvReader] as iteration advances. Call [close] (or exhaust the iterator) to release
- * the underlying [CsvReader].
+ * Password fields are stored as [CharArray] copies; the reader's scratch memory may be zeroed
+ * as iteration advances, depending on the [reader] implementation. Call [close] (or exhaust
+ * the iterator) to release the underlying [reader].
  */
-class CsvEntryIterator(
-    private val reader: CsvReader,
+class EntryMappingIterator(
+    private val reader: CloseableIterator<Array<CharArray>>,
     private val mapping: Map<Int, FieldType>,
     private val database: ContextualDatabase,
-) : Iterator<Entry>, Closeable {
+) : CloseableIterator<Entry> {
 
     enum class FieldType { IGNORE, TITLE, USERNAME, PASSWORD, URL, NOTES }
 

@@ -77,6 +77,7 @@ import com.kunzisoft.keepass.utils.closeDatabase
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.getParcelableList
 import com.kunzisoft.keepass.utils.putParcelableList
+import com.kunzisoft.keepass.utils.CloseableIterator
 import com.kunzisoft.keepass.viewmodels.FileDatabaseInfo
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -1213,7 +1214,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         ) {
             updateMessage(R.string.import_title)
             val parentId: NodeId<*>? = intent.getParcelableExtraCompat(PARENT_ID_KEY)
-            val entrySource: Iterator<Entry>? = retrievePendingEntrySource()
+            val entrySource: CloseableIterator<Entry>? = retrievePendingEntrySource()
             if (parentId == null || entrySource == null) return null
             val saveDatabase = intent.getBooleanExtra(SAVE_DATABASE_KEY, false)
             database.getGroupById(parentId)?.let { parent ->
@@ -1363,13 +1364,13 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
 
         private const val CHANNEL_DATABASE_ID = "com.kunzisoft.keepass.notification.channel.database"
 
-        private val pendingEntrySource = java.util.concurrent.atomic.AtomicReference<Iterator<Entry>?>(null)
+        private val pendingEntrySource = java.util.concurrent.atomic.AtomicReference<CloseableIterator<Entry>?>(null)
 
-        fun storePendingEntrySource(source: Iterator<Entry>) {
+        fun storePendingEntrySource(source: CloseableIterator<Entry>) {
             pendingEntrySource.set(source)
         }
 
-        private fun retrievePendingEntrySource(): Iterator<Entry>? {
+        private fun retrievePendingEntrySource(): CloseableIterator<Entry>? {
             return pendingEntrySource.getAndSet(null)
         }
 

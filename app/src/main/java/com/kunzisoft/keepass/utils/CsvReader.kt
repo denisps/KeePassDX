@@ -21,7 +21,6 @@ package com.kunzisoft.keepass.utils
 
 import android.content.ContentResolver
 import android.net.Uri
-import java.io.Closeable
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
@@ -44,7 +43,7 @@ import java.nio.charset.StandardCharsets
  *
  * Fields larger than [MAX_FIELD_BYTES] bytes are silently truncated.
  */
-class CsvReader(contentResolver: ContentResolver, uri: Uri) : Iterator<Array<CharArray>>, Closeable {
+class CsvReader(contentResolver: ContentResolver, uri: Uri) : CloseableIterator<Array<CharArray>> {
 
     /** Entire file content, owned by this instance and zeroed on [close]. */
     private val rawBytes: ByteArray

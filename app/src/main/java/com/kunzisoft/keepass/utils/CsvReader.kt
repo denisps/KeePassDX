@@ -221,13 +221,21 @@ class CsvReader(contentResolver: ContentResolver, uri: Uri) : Iterator<Array<Cha
     /**
      * Decodes [len] bytes from the start of [bytes] as UTF-8 and returns a fresh [CharArray].
      * Returns an empty [CharArray] for zero-length input.
+     *
+     * [Charset.decode] allocates its own internal [java.nio.CharBuffer] holding a full copy of
+     * the decoded plaintext; that buffer is not cleared by the JDK, so once the result has been
+     * copied out, its backing array is explicitly zeroed here to avoid leaving an extra unwiped
+     * copy of the secret on the heap.
      */
     private fun decodeUtf8(bytes: ByteArray, len: Int): CharArray {
         if (len == 0) return CharArray(0)
         val bb = ByteBuffer.wrap(bytes, 0, len)
         val cb = StandardCharsets.UTF_8.decode(bb)
-        val result = CharArray(cb.limit())
+        val result = CharArray(cb.remaining())
         cb.get(result)
+        if (cb.hasArray()) {
+            cb.array().fill('\u0000')
+        }
         return result
     }
 

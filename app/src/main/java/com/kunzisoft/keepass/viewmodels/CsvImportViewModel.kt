@@ -27,8 +27,7 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.DatabaseTaskProvider
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
-import com.kunzisoft.keepass.utils.CsvParser
-import java.io.InputStream
+import com.kunzisoft.keepass.utils.CsvReader
 
 class CsvImportViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -38,52 +37,71 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val databaseTaskProvider = DatabaseTaskProvider(application)
 
+    /** Holds the open [CsvReader] between [setFile] and [startImport]; closed in [onCleared]. */
+    private var csvReader: CsvReader? = null
+
     enum class FieldType {
         IGNORE, TITLE, USERNAME, PASSWORD, URL, NOTES
     }
 
-    fun setFile(uri: Uri, inputStream: InputStream) {
+    /**
+     * Opens [uri] via a [CsvReader], reads the first (header) record to populate [headers]
+     * and auto-detect [mapping], then retains the reader for [startImport].
+     * The header field names are non-sensitive, so they are converted to [String] for display.
+     */
+    fun setFile(uri: Uri) {
         fileUri.value = uri
-        val data = CsvParser.parse(inputStream)
-        if (data.isNotEmpty()) {
-            val headerList = data[0]
-            headers.value = headerList
-            
-            // Auto-detection
-            val newMapping = mutableMapOf<Int, FieldType>()
-            headerList.forEachIndexed { index, s ->
-                newMapping[index] = when (s.lowercase()) {
-                    "name", "title" -> FieldType.TITLE
-                    "url" -> FieldType.URL
-                    "username", "login", "user" -> FieldType.USERNAME
-                    "password" -> FieldType.PASSWORD
-                    "notes", "note" -> FieldType.NOTES
-                    else -> FieldType.IGNORE
-                }
+        csvReader?.close()
+        val reader = CsvReader(getApplication<Application>().contentResolver, uri)
+        csvReader = reader
+        if (!reader.hasNext()) return
+        // The first record is the header row.
+        val headerRecord = reader.next()
+        val headerList = headerRecord.map { String(it) }
+        headers.value = headerList
+        // Auto-detect field mapping from header names.
+        val newMapping = mutableMapOf<Int, FieldType>()
+        headerList.forEachIndexed { index, s ->
+            newMapping[index] = when (s.trim().lowercase()) {
+                "name", "title" -> FieldType.TITLE
+                "url"           -> FieldType.URL
+                "username", "login", "user" -> FieldType.USERNAME
+                "password"      -> FieldType.PASSWORD
+                "notes", "note" -> FieldType.NOTES
+                else            -> FieldType.IGNORE
             }
-            mapping.value = newMapping
         }
+        mapping.value = newMapping
+        // headerRecord CharArrays will be zeroed on the first reader.next() call in startImport.
     }
 
-    fun startImport(database: ContextualDatabase, parent: Group, inputStream: InputStream) {
-        val data = CsvParser.parse(inputStream)
-        if (data.size < 2) return
-        
+    /**
+     * Iterates the remaining records of the [CsvReader] opened by [setFile], creates [Entry]
+     * objects, then launches the database import task.
+     *
+     * Password fields are copied as [CharArray] (never converted to [String]) so that secret
+     * data does not linger on the heap as an immutable [String] object.
+     * Each record's [CharArray]s are zeroed by the reader as the iterator advances.
+     * The reader is closed and nulled out after all records have been consumed.
+     */
+    fun startImport(database: ContextualDatabase, parent: Group) {
+        val reader = csvReader ?: return
         val currentMapping = mapping.value ?: return
-        
+
         val entries = mutableListOf<Entry>()
-        for (i in 1 until data.size) {
-            val row = data[i]
+        while (reader.hasNext()) {
+            val record = reader.next()
             val entry = database.createEntry() ?: continue
-            row.forEachIndexed { index, value ->
-                val type = currentMapping[index] ?: FieldType.IGNORE
-                when (type) {
-                    FieldType.TITLE -> entry.title = value
-                    FieldType.USERNAME -> entry.username = value
-                    FieldType.PASSWORD -> entry.password = value.toCharArray()
-                    FieldType.URL -> entry.url = value
-                    FieldType.NOTES -> entry.notes = value
-                    FieldType.IGNORE -> {}
+            record.forEachIndexed { index, field ->
+                when (currentMapping[index] ?: FieldType.IGNORE) {
+                    FieldType.TITLE    -> entry.title    = String(field)
+                    FieldType.USERNAME -> entry.username = String(field)
+                    // Copy the CharArray so the entry owns its password independently of the
+                    // reader's scratch memory, which will be zeroed on the next iteration.
+                    FieldType.PASSWORD -> entry.password = field.copyOf()
+                    FieldType.URL      -> entry.url      = String(field)
+                    FieldType.NOTES    -> entry.notes    = String(field)
+                    FieldType.IGNORE   -> {}
                 }
             }
             if (entry.title.isEmpty() && entry.url.isNotEmpty()) {
@@ -93,9 +111,19 @@ class CsvImportViewModel(application: Application) : AndroidViewModel(applicatio
                 entries.add(entry)
             }
         }
-        
+
+        // All records consumed — zero and release the reader.
+        reader.close()
+        csvReader = null
+
         if (entries.isNotEmpty()) {
             databaseTaskProvider.startDatabaseImportCsv(entries, parent.nodeId, true)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        csvReader?.close()
+        csvReader = null
     }
 }

@@ -75,10 +75,7 @@ class CsvImportActivity : DatabaseLockActivity() {
             return
         }
 
-        viewModel.fileUri.value = csvUri
-        contentResolver.openInputStream(csvUri)?.use { inputStream ->
-            viewModel.setFile(csvUri, inputStream)
-        }
+        viewModel.setFile(csvUri)
 
         recyclerFieldMapping.layoutManager = LinearLayoutManager(this)
         viewModel.headers.observe(this) { headers ->
@@ -86,12 +83,9 @@ class CsvImportActivity : DatabaseLockActivity() {
         }
 
         buttonConfirmImport.setOnClickListener {
-            val uri = viewModel.fileUri.value ?: return@setOnClickListener
             val database = mDatabase ?: return@setOnClickListener
             val parent = parentGroup ?: return@setOnClickListener
-            contentResolver.openInputStream(uri)?.use { inputStream ->
-                viewModel.startImport(database, parent, inputStream)
-            }
+            viewModel.startImport(database, parent)
             finish()
         }
     }

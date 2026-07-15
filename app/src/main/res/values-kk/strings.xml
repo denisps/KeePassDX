@@ -10,6 +10,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Ескертпелер</string>
     <string name="csv_field_ignore">Елемеу</string>
-    <string name="csv_import_success">%d жазба импортталды</string>
     <string name="csv_import_error">CSV импорттау кезінде қате</string>
 </resources>

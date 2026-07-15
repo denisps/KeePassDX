@@ -10,6 +10,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">lipu sona</string>
     <string name="csv_field_ignore">o lukin ala e ni</string>
-    <string name="csv_import_success">ijo %d li kama</string>
     <string name="csv_import_error">pakala la pana CSV li ike</string>
 </resources>

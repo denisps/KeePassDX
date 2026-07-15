@@ -39,7 +39,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -57,8 +56,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
-import java.util.UUID
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.kunzisoft.keepass.R
@@ -92,6 +89,7 @@ import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.database.element.node.NodeIdUUID
 import com.kunzisoft.keepass.database.element.node.Type
+import com.kunzisoft.keepass.database.exception.DatabaseInputException
 import com.kunzisoft.keepass.database.exception.RegisterInReadOnlyDatabaseException
 import com.kunzisoft.keepass.database.helper.SearchHelper
 import com.kunzisoft.keepass.database.helper.SearchHelper.getSearchParametersFromSearchInfo
@@ -104,8 +102,6 @@ import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_ENTRY_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_UPDATE_GROUP_TASK
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_IMPORT_TASK
-import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.NEW_NODES_KEY
-import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ENTRIES_ID_KEY
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.getNewEntry
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.settings.SettingsActivity
@@ -368,7 +364,7 @@ class GroupActivity : DatabaseLockActivity(),
                 ?: mDatabase?.rootGroup?.nodeId
             if (groupId == null) {
                 Log.e(TAG, "No group found for CSV import")
-                Toast.makeText(this, R.string.error_load_database, Toast.LENGTH_LONG).show()
+                coordinatorError?.showError(DatabaseInputException())
                 return@registerOpenDocument
             }
             CsvImportActivity.launch(this, groupId, selectedUri)
@@ -794,65 +790,55 @@ class GroupActivity : DatabaseLockActivity(),
         result: ActionRunnable.Result
     ) {
         super.onDatabaseActionFinished(database, actionTask, result)
+        if (!result.isSuccess) {
+            if (actionTask == ACTION_DATABASE_UPDATE_GROUP_TASK ||
+                actionTask == ACTION_DATABASE_UPDATE_ENTRY_TASK ||
+                actionTask == ACTION_DATABASE_IMPORT_TASK
+            ) {
+                coordinatorError?.showActionErrorIfNeeded(result)
+            }
+            return
+        }
         when (actionTask) {
             ACTION_DATABASE_UPDATE_ENTRY_TASK -> {
-                if (result.isSuccess) {
-                    EntrySelectionHelper.doSpecialAction(
-                        intent = intent,
-                        defaultAction = {
-                            // Standard not used after task
-                        },
-                        searchAction = {
-                            // Search not used
-                        },
-                        selectionAction = { _, typeMode, _ ->
-                            var entry: Entry? = null
-                            try {
-                                entry = result.data?.getNewEntry(database)
-                            } catch (e: Exception) {
-                                Log.e(TAG, "Unable to retrieve entry action for selection", e)
-                            }
+                EntrySelectionHelper.doSpecialAction(
+                    intent = intent,
+                    defaultAction = {
+                        // Standard not used after task
+                    },
+                    searchAction = {
+                        // Search not used
+                    },
+                    selectionAction = { _, typeMode, _ ->
+                        val entry = try {
+                            result.data?.getNewEntry(database)
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Unable to retrieve entry action for selection", e)
+                            null
+                        }
+                        entry?.let {
                             when (typeMode) {
                                 TypeMode.DEFAULT -> {}
-                                TypeMode.MAGIKEYBOARD -> entry?.let {
+                                TypeMode.MAGIKEYBOARD, TypeMode.AUTOFILL ->
                                     entrySelectedForSelection(database, it)
-                                }
-                                TypeMode.AUTOFILL -> entry?.let {
-                                    entrySelectedForSelection(database, it)
-                                }
-                                TypeMode.PASSKEY -> entry?.let {
+                                TypeMode.PASSKEY ->
                                     entrySelectedForPasskeySelection(database, it)
-                                }
-                                TypeMode.PASSWORD -> entry?.let {
+                                TypeMode.PASSWORD ->
                                     entrySelectedForPasswordSelection(database, it)
-                                }
                             }
-                        },
-                        registrationAction = { _, _, _ ->
-                            // Save not used
                         }
-                    )
-                }
-            }
-            ACTION_DATABASE_IMPORT_TASK -> {
-                if (result.isSuccess) {
-                    val entriesCount = result.data?.getBundle(NEW_NODES_KEY)
-                        ?.getParcelableList<NodeId<UUID>>(ENTRIES_ID_KEY)?.size ?: 0
-                    coordinatorLayout?.let {
-                        Snackbar.make(it, getString(R.string.csv_import_success, entriesCount), Snackbar.LENGTH_LONG).show()
-                    }
-                    loadGroup()
-                } else {
-                    coordinatorError?.showActionErrorIfNeeded(result)
-                }
+                    },
+                    registrationAction = { _, _, _ -> }
+                )
             }
         }
-        if (actionTask == ACTION_DATABASE_UPDATE_GROUP_TASK
-            || actionTask == ACTION_DATABASE_UPDATE_ENTRY_TASK) {
-            if (result.isSuccess) {
-                coordinatorError?.showActionErrorIfNeeded(result)
-                // Reload the group
-                loadGroup()
+
+        if (actionTask == ACTION_DATABASE_UPDATE_GROUP_TASK ||
+            actionTask == ACTION_DATABASE_UPDATE_ENTRY_TASK ||
+            actionTask == ACTION_DATABASE_IMPORT_TASK
+        ) {
+            loadGroup()
+            if (actionTask != ACTION_DATABASE_IMPORT_TASK) {
                 finishNodeAction()
             }
         }

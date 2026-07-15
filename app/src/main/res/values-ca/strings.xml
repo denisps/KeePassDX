@@ -430,7 +430,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notes</string>
     <string name="csv_field_ignore">Ignora</string>
-    <string name="csv_import_success">S\'han importat %d entrades</string>
     <string name="csv_import_error">Error en importar CSV</string>
     <string name="menu_reload_database">Recarregar dada</string>
     <string name="international_bank_account_number">IBAN</string>

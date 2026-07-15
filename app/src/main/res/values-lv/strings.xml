@@ -328,6 +328,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Piezīmes</string>
     <string name="csv_field_ignore">Ignorēt</string>
-    <string name="csv_import_success">Importēti %d ieraksti</string>
     <string name="csv_import_error">Kļūda, importējot CSV</string>
 </resources>

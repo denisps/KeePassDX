@@ -76,6 +76,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Opombe</string>
     <string name="csv_field_ignore">Prezri</string>
-    <string name="csv_import_success">Uvoženih %d vnosov</string>
     <string name="csv_import_error">Napaka pri uvozu CSV</string>
 </resources>

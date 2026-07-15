@@ -24,6 +24,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">टिपा</string>
     <string name="csv_field_ignore">दुर्लक्ष करा</string>
-    <string name="csv_import_success">%d नोंदी आयात केल्या</string>
     <string name="csv_import_error">CSV आयात करताना त्रुटी</string>
 </resources>

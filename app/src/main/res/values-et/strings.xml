@@ -237,7 +237,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Märkmed</string>
     <string name="csv_field_ignore">Eira</string>
-    <string name="csv_import_success">%d kirjet imporditud</string>
     <string name="csv_import_error">Viga CSV importimisel</string>
     <string name="menu_reload_database">Laadi andmed uuesti</string>
     <string name="menu_delete">Kustuta</string>

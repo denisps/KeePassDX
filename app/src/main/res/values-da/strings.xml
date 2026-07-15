@@ -512,7 +512,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Noter</string>
     <string name="csv_field_ignore">Ignorer</string>
-    <string name="csv_import_success">%d poster importeret</string>
     <string name="csv_import_error">Fejl ved import af CSV</string>
     <string name="menu_reload_database">Genindlæs data</string>
     <string name="error_duplicate_file">Fildataene findes allerede.</string>

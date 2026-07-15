@@ -536,7 +536,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notes</string>
     <string name="csv_field_ignore">Ignorer</string>
-    <string name="csv_import_success">%d entrées importées</string>
     <string name="csv_import_error">Erreur lors de l\'importation CSV</string>
     <string name="menu_reload_database">Recharger les données</string>
     <string name="unit_gibibyte">Gibioctets</string>

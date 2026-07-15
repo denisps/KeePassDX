@@ -269,7 +269,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Нататкі</string>
     <string name="csv_field_ignore">Ігнараваць</string>
-    <string name="csv_import_success">Імпартавана %d запісаў</string>
     <string name="csv_import_error">Памылка пры імпарце CSV</string>
     <string name="menu_reload_database">Перазагрузіць дадзеныя</string>
     <string name="menu_merge_from">Аб\'яднаць з…</string>

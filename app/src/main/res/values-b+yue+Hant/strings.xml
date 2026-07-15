@@ -149,6 +149,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">备注</string>
     <string name="csv_field_ignore">忽略</string>
-    <string name="csv_import_success">已导入 %d 条条目</string>
     <string name="csv_import_error">导入 CSV 时出错</string>
 </resources>

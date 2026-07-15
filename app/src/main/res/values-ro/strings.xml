@@ -485,7 +485,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Note</string>
     <string name="csv_field_ignore">Ignoră</string>
-    <string name="csv_import_success">Au fost importate %d intrări</string>
     <string name="csv_import_error">Eroare la importarea CSV</string>
     <string name="menu_reload_database">Reîncărcare date</string>
     <string name="save_mode">Mod de salvare</string>

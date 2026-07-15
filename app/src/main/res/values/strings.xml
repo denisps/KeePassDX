@@ -293,7 +293,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notes</string>
     <string name="csv_field_ignore">Ignore</string>
-    <string name="csv_import_success">%d entries imported</string>
     <string name="csv_import_error">Error importing CSV</string>
     <string name="menu_reload_database">Reload data</string>
     <string name="menu_merge_from">Merge from …</string>

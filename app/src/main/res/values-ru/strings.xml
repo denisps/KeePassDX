@@ -520,7 +520,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Заметки</string>
     <string name="csv_field_ignore">Игнорировать</string>
-    <string name="csv_import_success">Импортировано записей: %d</string>
     <string name="csv_import_error">Ошибка при импорте CSV</string>
     <string name="menu_reload_database">Перезагрузить данные</string>
     <string name="error_otp_type">Существующий тип OTP не распознаётся данной формой и его проверка больше не может корректно генерировать токен.</string>

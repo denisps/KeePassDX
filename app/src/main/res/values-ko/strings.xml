@@ -278,7 +278,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">메모</string>
     <string name="csv_field_ignore">무시</string>
-    <string name="csv_import_success">%d개 항목을 가져왔습니다</string>
     <string name="csv_import_error">CSV 가져오기 오류</string>
     <string name="menu_reload_database">데이터 다시 읽기</string>
     <string name="menu_empty_recycle_bin">휴지통 비우기</string>

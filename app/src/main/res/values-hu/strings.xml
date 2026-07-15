@@ -464,7 +464,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Jegyzetek</string>
     <string name="csv_field_ignore">Kihagyás</string>
-    <string name="csv_import_success">%d bejegyzés importálva</string>
     <string name="csv_import_error">Hiba a CSV importálásakor</string>
     <string name="menu_reload_database">Adatok újratöltése</string>
     <string name="error_start_database_action">Hiba történt az adatbázison végzett művelet során.</string>

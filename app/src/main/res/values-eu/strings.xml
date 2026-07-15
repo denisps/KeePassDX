@@ -349,7 +349,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Oharrak</string>
     <string name="csv_field_ignore">Ez ikusi egin</string>
-    <string name="csv_import_success">%d sarrera inportatu dira</string>
     <string name="csv_import_error">Errorea CSV inportatzean</string>
     <string name="menu_reload_database">Datuak birkargatu</string>
     <string name="menu_merge_from">Fusionatu hemendik…</string>

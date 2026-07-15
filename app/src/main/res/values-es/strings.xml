@@ -514,7 +514,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notas</string>
     <string name="csv_field_ignore">Ignorar</string>
-    <string name="csv_import_success">%d entradas importadas</string>
     <string name="csv_import_error">Error al importar CSV</string>
     <string name="menu_reload_database">Recargar datos</string>
     <string name="error_otp_type">El tipo de OTP existente no es reconocido por este formulario, y es posible que su validación ya no genere correctamente el token.</string>

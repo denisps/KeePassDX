@@ -515,7 +515,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notlar</string>
     <string name="csv_field_ignore">Yoksay</string>
-    <string name="csv_import_success">%d girdi içe aktarıldı</string>
     <string name="csv_import_error">CSV içe aktarılırken hata oluştu</string>
     <string name="menu_reload_database">Verileri yeniden yükle</string>
     <string name="unit_gibibyte">GiB</string>

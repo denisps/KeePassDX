@@ -450,7 +450,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">ملاحظات</string>
     <string name="csv_field_ignore">تجاهل</string>
-    <string name="csv_import_success">تم استيراد %d من المدخلات</string>
     <string name="csv_import_error">خطأ في استيراد CSV</string>
     <string name="menu_reload_database">أعد تحميل البيانات</string>
     <string name="menu_external_icon">أيقونة خارجية</string>

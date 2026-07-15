@@ -520,7 +520,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Σημειώσεις</string>
     <string name="csv_field_ignore">Παράβλεψη</string>
-    <string name="csv_import_success">Εισήχθησαν %d καταχωρίσεις</string>
     <string name="csv_import_error">Σφάλμα κατά την εισαγωγή CSV</string>
     <string name="menu_reload_database">Επαναφόρτωση δεδομένων</string>
     <string name="unit_gibibyte">GiB</string>

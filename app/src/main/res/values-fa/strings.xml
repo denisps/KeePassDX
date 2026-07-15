@@ -282,7 +282,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">یادداشت‌ها</string>
     <string name="csv_field_ignore">نادیده گرفتن</string>
-    <string name="csv_import_success">%d ورودی درون‌ریزی شد</string>
     <string name="csv_import_error">خطا در درون‌ریزی CSV</string>
     <string name="menu_reload_database">بارگیری مجدد پایگاه داده</string>
     <string name="error_start_database_action">هنگام انجام عملیات در پایگاه داده خطایی روی داد.</string>

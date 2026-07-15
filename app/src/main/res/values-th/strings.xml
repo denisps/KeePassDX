@@ -273,7 +273,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">บันทึก</string>
     <string name="csv_field_ignore">ละเว้น</string>
-    <string name="csv_import_success">นำเข้ารายการแล้ว %d รายการ</string>
     <string name="csv_import_error">เกิดข้อผิดพลาดในการนำเข้า CSV</string>
     <string name="menu_reload_database">โหลดข้อมูลซ้ำ</string>
     <string name="menu_merge_database">ควบรวมข้อมูล</string>

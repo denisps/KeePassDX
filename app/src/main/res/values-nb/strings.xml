@@ -486,7 +486,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notater</string>
     <string name="csv_field_ignore">Ignorer</string>
-    <string name="csv_import_success">%d oppføringer importert</string>
     <string name="csv_import_error">Feil ved import av CSV</string>
     <string name="menu_reload_database">Last data på nytt</string>
     <string name="menu_keystore_remove_key">Slett enhetens opplåsingsnøkkel</string>

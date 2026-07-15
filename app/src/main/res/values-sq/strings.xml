@@ -221,7 +221,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Shënime</string>
     <string name="csv_field_ignore">Shpërfill</string>
-    <string name="csv_import_success">U importuan %d hyrje</string>
     <string name="csv_import_error">Gabim gjatë importimit të CSV-së</string>
     <string name="menu_reload_database">Ringarko të dhënat</string>
     <string name="menu_save_copy_to">Ruaj një kopje te …</string>

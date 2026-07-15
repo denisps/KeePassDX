@@ -100,6 +100,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">নোট</string>
     <string name="csv_field_ignore">উপেক্ষা করুন</string>
-    <string name="csv_import_success">%dটি এন্ট্রি আমদানি করা হয়েছে</string>
     <string name="csv_import_error">CSV আমদানিতে ত্রুটি</string>
 </resources>

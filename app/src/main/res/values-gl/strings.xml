@@ -266,7 +266,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notas</string>
     <string name="csv_field_ignore">Ignorar</string>
-    <string name="csv_import_success">Importáronse %d entradas</string>
     <string name="csv_import_error">Erro ao importar CSV</string>
     <string name="menu_reload_database">Recarregar datos</string>
     <string name="menu_delete">Borrar</string>

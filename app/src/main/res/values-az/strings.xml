@@ -155,7 +155,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Qeydlər</string>
     <string name="csv_field_ignore">Yox say</string>
-    <string name="csv_import_success">%d qeyd idxal edildi</string>
     <string name="csv_import_error">CSV idxalı zamanı xəta</string>
     <string name="menu_reload_database">Məlumatları yenidən yüklə</string>
     <string name="menu_merge_from">… -dan birləşdir</string>

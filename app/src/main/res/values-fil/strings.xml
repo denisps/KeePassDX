@@ -269,7 +269,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Mga tala</string>
     <string name="csv_field_ignore">Huwag pansinin</string>
-    <string name="csv_import_success">Na-import ang %d entry</string>
     <string name="csv_import_error">Error sa pag-import ng CSV</string>
     <string name="menu_reload_database">I-reload ang data</string>
     <string name="menu_merge_from">Isama mula sa…</string>

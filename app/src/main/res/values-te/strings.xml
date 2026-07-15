@@ -38,6 +38,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">గమనికలు</string>
     <string name="csv_field_ignore">విస్మరించు</string>
-    <string name="csv_import_success">%d నమోదులు దిగుమతి చేయబడ్డాయి</string>
     <string name="csv_import_error">CSV దిగుమతి సమయంలో లోపం</string>
 </resources>

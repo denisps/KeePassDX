@@ -73,6 +73,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Eslatmalar</string>
     <string name="csv_field_ignore">E\'tiborsiz qoldirish</string>
-    <string name="csv_import_success">%d ta yozuv import qilindi</string>
     <string name="csv_import_error">CSV importida xatolik</string>
 </resources>

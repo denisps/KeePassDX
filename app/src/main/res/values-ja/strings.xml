@@ -511,7 +511,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">メモ</string>
     <string name="csv_field_ignore">無視</string>
-    <string name="csv_import_success">%d 件のエントリをインポートしました</string>
     <string name="csv_import_error">CSVのインポート中にエラーが発生しました</string>
     <string name="menu_reload_database">再度読み込む</string>
     <string name="error_rebuild_list">リストを正しく再構築できません。</string>

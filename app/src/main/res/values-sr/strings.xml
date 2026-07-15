@@ -298,7 +298,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Белешке</string>
     <string name="csv_field_ignore">Игнориши</string>
-    <string name="csv_import_success">Увезено је %d уноса</string>
     <string name="csv_import_error">Грешка при увозу CSV</string>
     <string name="menu_reload_database">Поново учитај податке</string>
     <string name="menu_merge_from">Сједини из…</string>

@@ -49,6 +49,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Белешки</string>
     <string name="csv_field_ignore">Игнорирај</string>
-    <string name="csv_import_success">Увезени се %d ставки</string>
     <string name="csv_import_error">Грешка при увоз на CSV</string>
 </resources>

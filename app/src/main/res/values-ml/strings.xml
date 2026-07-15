@@ -407,6 +407,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">കുറിപ്പുകൾ</string>
     <string name="csv_field_ignore">അവഗണിക്കുക</string>
-    <string name="csv_import_success">%d എൻട്രികൾ ഇറക്കുമതി ചെയ്തു</string>
     <string name="csv_import_error">CSV ഇറക്കുമതി ചെയ്യുന്നതിൽ പിശക്</string>
 </resources>

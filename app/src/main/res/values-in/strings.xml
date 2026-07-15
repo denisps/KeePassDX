@@ -314,7 +314,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Catatan</string>
     <string name="csv_field_ignore">Abaikan</string>
-    <string name="csv_import_success">%d entri diimpor</string>
     <string name="csv_import_error">Galat saat mengimpor CSV</string>
     <string name="menu_reload_database">Muat ulang data</string>
     <string name="error_database_uri_null">URI basis data tidak dapat diambil.</string>

@@ -348,6 +348,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">ਨੋਟਸ</string>
     <string name="csv_field_ignore">ਅਣਡਿੱਠਾ ਕਰੋ</string>
-    <string name="csv_import_success">%d ਐਂਟਰੀਆਂ ਆਯਾਤ ਕੀਤੀਆਂ ਗਈਆਂ</string>
     <string name="csv_import_error">CSV ਆਯਾਤ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ</string>
 </resources>

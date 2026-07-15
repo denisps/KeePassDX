@@ -177,6 +177,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">नोट्स</string>
     <string name="csv_field_ignore">अनदेखा करें</string>
-    <string name="csv_import_success">%d प्रविष्टियाँ आयात की गईं</string>
     <string name="csv_import_error">CSV आयात करते समय त्रुटि</string>
 </resources>

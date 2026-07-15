@@ -54,6 +54,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">မှတ်စုများ</string>
     <string name="csv_field_ignore">လျစ်လျူရှုရန်</string>
-    <string name="csv_import_success">%d ခုသော entry များကို တင်သွင်းပြီးပါပြီ</string>
     <string name="csv_import_error">CSV တင်သွင်းရာတွင် အမှားဖြစ်ခဲ့သည်</string>
 </resources>

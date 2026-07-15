@@ -408,7 +408,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Muistiinpanot</string>
     <string name="csv_field_ignore">Ohita</string>
-    <string name="csv_import_success">%d merkintää tuotu</string>
     <string name="csv_import_error">Virhe CSV:n tuonnissa</string>
     <string name="menu_reload_database">Lataa tiedot uudelleen</string>
     <string name="menu_merge_from">Yhdistä kohteesta …</string>

@@ -287,7 +287,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">הערות</string>
     <string name="csv_field_ignore">התעלם</string>
-    <string name="csv_import_success">יובאו %d רשומות</string>
     <string name="csv_import_error">שגיאה בייבוא CSV</string>
     <string name="menu_reload_database">טען מחדש נתונים</string>
     <string name="show_uuid_title">הצג UUID</string>

@@ -13,6 +13,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">ଟିପ୍ପଣୀଗୁଡ଼ିକ</string>
     <string name="csv_field_ignore">ଅନଦେଖା କରନ୍ତୁ</string>
-    <string name="csv_import_success">%dଟି ଏଣ୍ଟ୍ରି ଆମଦାନି ହୋଇଛି</string>
     <string name="csv_import_error">CSV ଆମଦାନି କରିବାରେ ତ୍ରୁଟି</string>
 </resources>

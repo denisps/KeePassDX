@@ -520,7 +520,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Примітки</string>
     <string name="csv_field_ignore">Ігнорувати</string>
-    <string name="csv_import_success">Імпортовано записів: %d</string>
     <string name="csv_import_error">Помилка при імпорті CSV</string>
     <string name="menu_reload_database">Перезавантажити дані</string>
     <string name="unit_gibibyte">ГіБ</string>

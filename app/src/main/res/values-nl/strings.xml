@@ -525,7 +525,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notities</string>
     <string name="csv_field_ignore">Negeren</string>
-    <string name="csv_import_success">%d items geïmporteerd</string>
     <string name="csv_import_error">Fout bij importeren van CSV</string>
     <string name="menu_reload_database">Gegevens opnieuw laden</string>
     <string name="error_rebuild_list">Kan de lijst niet correct opnieuw opbouwen.</string>

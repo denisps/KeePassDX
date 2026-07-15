@@ -252,6 +252,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notes</string>
     <string name="csv_field_ignore">Ignore</string>
-    <string name="csv_import_success">%d entries imported</string>
     <string name="csv_import_error">Error importing CSV</string>
 </resources>

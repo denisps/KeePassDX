@@ -515,7 +515,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Bilješke</string>
     <string name="csv_field_ignore">Ignoriraj</string>
-    <string name="csv_import_success">Uvezeno je %d stavki</string>
     <string name="csv_import_error">Pogreška pri uvozu CSV</string>
     <string name="menu_reload_database">Ponovo učitaj podatke</string>
     <string name="error_otp_type">Ovaj obrazac ne prepoznaje postojeću vrstu jednokratne lozinke. Provjera valjanosti možda više neće pravilno generirati token.</string>

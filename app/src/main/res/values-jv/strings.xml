@@ -37,6 +37,5 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Cathetan</string>
     <string name="csv_field_ignore">Aja digatekake</string>
-    <string name="csv_import_success">%d entri diimpor</string>
     <string name="csv_import_error">Ana kasalahan nalika ngimpor CSV</string>
 </resources>

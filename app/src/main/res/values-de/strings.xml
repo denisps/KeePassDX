@@ -527,7 +527,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notizen</string>
     <string name="csv_field_ignore">Ignorieren</string>
-    <string name="csv_import_success">%d Einträge importiert</string>
     <string name="csv_import_error">Fehler beim CSV-Import</string>
     <string name="menu_reload_database">Daten neu laden</string>
     <string name="warning_database_info_changed_options">Die Daten zusammenführen, die externen Änderungen durch Speichern der Datenbank überschreiben oder sie mit den neusten Änderungen laden.</string>

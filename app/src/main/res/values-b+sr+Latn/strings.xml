@@ -297,7 +297,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Notes</string>
     <string name="csv_field_ignore">Ignore</string>
-    <string name="csv_import_success">%d entries imported</string>
     <string name="csv_import_error">Error importing CSV</string>
     <string name="menu_reload_database">Поново учитај податке</string>
     <string name="no_url_handler">Instalirajte veb pregledač da biste otvorili ovu URL adresu.</string>

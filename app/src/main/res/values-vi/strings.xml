@@ -281,7 +281,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">Ghi chú</string>
     <string name="csv_field_ignore">Bỏ qua</string>
-    <string name="csv_import_success">Đã nhập %d mục</string>
     <string name="csv_import_error">Lỗi khi nhập CSV</string>
     <string name="menu_reload_database">Tải lại dữ liệu</string>
     <string name="menu_merge_from">Hợp nhất từ …</string>

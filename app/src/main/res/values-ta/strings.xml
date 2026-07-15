@@ -311,7 +311,6 @@
     <string name="csv_field_url">URL</string>
     <string name="csv_field_notes">குறிப்புகள்</string>
     <string name="csv_field_ignore">புறக்கணி</string>
-    <string name="csv_import_success">%d பதிவுகள் இறக்குமதி செய்யப்பட்டன</string>
     <string name="csv_import_error">CSV இறக்குமதி செய்யும்போது பிழை</string>
     <string name="menu_reload_database">தரவை மீண்டும் ஏற்றவும்</string>
     <string name="menu_merge_from">ஒன்றிணைக்கவும்…</string>
